@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepoLayer.Entities;
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace FundoNote.Controllers
 {
@@ -61,6 +63,53 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        [HttpPost]
+        [Route("Forget-Password")]
+        public IActionResult ForgetPassword(ForgetPasswordModel forgetPassword)
+        {
+            try
+            {
+                var user = userBusiness.ForgetPassword(forgetPassword);
+                if (user!=null)
+                {
+                    return Ok(new { sucess = true, message = "User Forget Password Sucesssfull",Token = user});
+                }
+                else
+                {
+                    return BadRequest(new { sucess = false, message = "User Forget Password Unsucesssfull" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        [Authorize]
+        [HttpPut("ResetPassword")]
+        public IActionResult ResetPassword(ResetPasswordModel resetPassword)
+        {
+            try
+            {
+                var email = User.FindFirst(ClaimTypes.Email).Value.ToString();
+                
+                var user = userBusiness.ResetPassword(resetPassword, email);
+                if (user)
+                {
+                    return Ok(new { sucess = true, message = "Reset Password Sucesssfull" });
+                }
+                else
+                {
+                    return Ok(new { sucess = false, message = "Reset Password Unsucesssfull" });
+                }
+                
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpGet]
         [Route("Users")]
         public IActionResult GetAllUserData()
@@ -83,5 +132,6 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+       
     }
 }

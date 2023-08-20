@@ -2,7 +2,7 @@
 
 namespace RepoLayer.Migrations
 {
-    public partial class UserTableMigration : Migration
+    public partial class FirstMigrationUserTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -20,7 +20,7 @@ namespace BusinessLayer.Service
         {
             try
             {
-                return userRepo.UserRegister(model);//ASK
+                return userRepo.UserRegister(model);
             }
             catch (Exception)
             {
@@ -46,6 +46,30 @@ namespace BusinessLayer.Service
             try
             {
                 return userRepo.JWTTokenGenerator(userid, email);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public string ForgetPassword(ForgetPasswordModel forgetPassword)
+        {
+            try
+            {
+                return userRepo.ForgetPassword(forgetPassword);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool ResetPassword(ResetPasswordModel resetPassword, string email)
+        {
+            try
+            {
+                return userRepo.ResetPassword(resetPassword, email);
             }
             catch (Exception)
             {

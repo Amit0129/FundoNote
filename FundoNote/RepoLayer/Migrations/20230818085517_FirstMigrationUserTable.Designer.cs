@@ -9,8 +9,8 @@ using RepoLayer.Context;
 namespace RepoLayer.Migrations
 {
     [DbContext(typeof(FundoContext))]
-    [Migration("20230810101809_UserTableMigration")]
-    partial class UserTableMigration
+    [Migration("20230818085517_FirstMigrationUserTable")]
+    partial class FirstMigrationUserTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

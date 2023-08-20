@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "B1gBY+MWiO19gH0uDA8/ief4N5XkigvdPyZ8J/xB5hohJ4itpmwxFcDF9WqlragRDvezuy9zzVrKbE06DxbzAQ==",
+  "dgSpecHash": "avZYnzsfj0zo5TWGKuFJ0sdqKFozHaWzxW0D0/FdULmXRejLMUnoXaBii9jWtoHgx6WCz6npqkYXuyw57q/frA==",
   "success": true,
   "projectFilePath": "Q:\\CFP\\ASP.NET Core app\\FundoNote\\FundoNote\\FundoNote.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\win10\\.nuget\\packages\\experimental.system.messaging\\1.1.0\\experimental.system.messaging.1.1.0.nupkg.sha512",
     "C:\\Users\\win10\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.0\\microsoft.aspnetcore.authentication.jwtbearer.3.1.0.nupkg.sha512",
     "C:\\Users\\win10\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Users\\win10\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",

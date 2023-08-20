@@ -62,3 +62,4 @@ Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\Swashbuckle.
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.MvcApplicationPartsAssemblyInfo.cs
+Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\Experimental.System.Messaging.dll

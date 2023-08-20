@@ -44,10 +44,10 @@ namespace RepoLayer.Service
             try
             {
                 UserEntity userEntity = new UserEntity();
-                userEntity.FirstName= model.FirstName;
-                userEntity.LastName= model.LastName;
-                userEntity.Email= model.Email;
-                userEntity.Password=EncryptAndDrcrypy.ConvertToEncrypt(model.Password);
+                userEntity.FirstName = model.FirstName;
+                userEntity.LastName = model.LastName;
+                userEntity.Email = model.Email;
+                userEntity.Password = EncryptAndDrcrypy.ConvertToEncrypt(model.Password);
 
                 fundoContext.Users.Add(userEntity);
                 fundoContext.SaveChanges();
@@ -73,13 +73,13 @@ namespace RepoLayer.Service
             {
                 UserEntity userEntityLogin = new UserEntity();
                 var encryptPassword = EncryptAndDrcrypy.ConvertToEncrypt(loginModel.Password);
-                userEntityLogin = fundoContext.Users.FirstOrDefault(x=>x.Email == loginModel.Email && x.Password == encryptPassword);
-                
+                userEntityLogin = fundoContext.Users.FirstOrDefault(x => x.Email == loginModel.Email && x.Password == encryptPassword);
+
                 if (userEntityLogin == null)
                 {
                     return null;
                 }
-                else 
+                else
                 {
                     var id = userEntityLogin.UserID;
                     var email = userEntityLogin.Email;
@@ -102,14 +102,62 @@ namespace RepoLayer.Service
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("UserId", userid.ToString()),
-                    new Claim(ClaimTypes.Email, email)
+                    new Claim(ClaimTypes.Email, email),
+                    new Claim("UserId", userid.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(25),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
             };
             var token = tokenHanler.CreateToken(tokenDescriptor);
             return tokenHanler.WriteToken(token);
+        }
+        //Forget Password==========================
+        public string ForgetPassword(ForgetPasswordModel forgetPassword)
+        {
+            try
+            {
+                var user = fundoContext.Users.Where(x => x.Email == forgetPassword.Email).FirstOrDefault();
+                var userEmail = user.Email;
+                var id = user.UserID;
+                if (user != null)
+                {
+                    var token = JWTTokenGenerator(id, userEmail);
+                    MSMQ msmq = new MSMQ();
+                    msmq.sendData2Queue(token);
+                    return token;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        //ResetPassword ===================
+        public bool ResetPassword(ResetPasswordModel resetPassword,string email)
+        {
+            try
+            {
+                UserEntity user = new UserEntity();
+                user = fundoContext.Users.FirstOrDefault(x => x.Email == email);
+                if (user != null && resetPassword.NewPassword == resetPassword.ConfirmPassword)
+                {
+                    user.Password = EncryptAndDrcrypy.ConvertToEncrypt(resetPassword.NewPassword);
+                    //fundoContext.Users.Update(user);
+                    fundoContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         //Get All User Data========================
         public List<UserEntity> GetAllUserData()
