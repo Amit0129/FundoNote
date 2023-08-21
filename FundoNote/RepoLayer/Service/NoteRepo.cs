@@ -1,4 +1,7 @@
-﻿using CommonLayer.Models;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using CommonLayer.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using RepoLayer.Context;
 using RepoLayer.Entities;
@@ -14,12 +17,17 @@ namespace RepoLayer.Service
     {
         private readonly FundoContext context;
         private readonly IConfiguration Iconfiguration;
+        private const string CLOUD_NAME = "dwml60k7f";
+        private const string API_KEY = "318991467217643";
+        private const string API_SECRET = "N41mBRTMmi8auMdCqgE9WO_sU-s";
+        public static Cloudinary cloud;
+
         public NoteRepo(FundoContext context, IConfiguration iconfiguration)
         {
             this.context = context;
             Iconfiguration = iconfiguration;
         }
-        public NotesEntity AddNote(AddNoteModel noteModel,long userId)
+        public NotesEntity AddNote(AddNoteModel noteModel, long userId)
         {
             try
             {
@@ -52,19 +60,19 @@ namespace RepoLayer.Service
         }
 
         //Update Notes Of a User==============================
-        public NotesEntity UpdateNotes(UpdateNoteModel updateNote,long userId)
+        public NotesEntity UpdateNotes(UpdateNoteModel updateNote, long userId)
         {
             try
             {
-                NotesEntity note = context.Notes.FirstOrDefault(x=>x.UserId == userId && x.NoteId== updateNote.NoteId);
-                if (note!=null)
+                NotesEntity note = context.Notes.FirstOrDefault(x => x.UserId == userId && x.NoteId == updateNote.NoteId);
+                if (note != null)
                 {
                     note.Title = updateNote.Title;
                     note.Note = updateNote.Note;
-                    note.RemindMe= updateNote.RemindMe;
+                    note.RemindMe = updateNote.RemindMe;
                     note.Color = updateNote.Color;
                     note.Image = updateNote.Image;
-                    note.IsAechive= updateNote.IsAechive;
+                    note.IsAechive = updateNote.IsAechive;
                     note.IsPin = updateNote.IsPin;
                     note.IsTrash = updateNote.IsTrash;
                     note.Edited = DateTime.Now;
@@ -112,6 +120,125 @@ namespace RepoLayer.Service
                 throw;
             }
         }
-        
+        //Ispin==========
+        public NotesEntity IsPin(long noteId, long userId)
+        {
+            try
+            {
+                var note = context.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
+                if (note.IsPin == true)
+                {
+                    note.IsPin = false;
+                    context.SaveChanges();
+                    return note;
+                }
+                note.IsPin = true;
+                context.SaveChanges();
+                return note;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        //IsAchive=====================
+        public NotesEntity IsAchive(long noteId, long userId)
+        {
+            try
+            {
+                var note = context.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
+                if (note.IsAechive == true)
+                {
+                    note.IsAechive = false;
+                    context.SaveChanges();
+                    return note;
+                }
+                note.IsAechive = true;
+                context.SaveChanges();
+                return note;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+        }
+        //IsTrash===================
+        public NotesEntity IsTrash(long noteId, long userId)
+        {
+            try
+            {
+                var note = context.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
+                if (note.IsTrash == true)
+                {
+                    note.IsTrash = false;
+                    context.SaveChanges();
+                    return note;
+                }
+                note.IsTrash = true;
+                context.SaveChanges();
+                return note;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
+        //Color Change Api===================
+        public NotesEntity Color(long noteId, string color, long userId)
+        {
+            try
+            {
+                var note = context.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
+                if (note != null)
+                {
+                    note.Color = color;
+                    context.SaveChanges();
+                    return note;
+                }
+                note.Color = color;
+                context.SaveChanges();
+                return note;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        //Image Api
+        public NotesEntity UploadImage(long noteid, IFormFile img, long userId)
+        {
+            try
+            {
+                var note = this.context.Notes.FirstOrDefault(x => x.NoteId == noteid && x.UserId == userId);
+                if (note != null)
+                {
+                    Account acc = new Account(CLOUD_NAME, API_KEY, API_SECRET);
+                    cloud = new Cloudinary(acc);
+                    var imagePath = img.OpenReadStream();
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(img.FileName, imagePath)
+                    };
+                    var uploadresult = cloud.Upload(uploadParams).SecureUrl;
+                    note.Image = uploadresult.ToString();
+                    context.Notes.Update(note);
+                    context.SaveChanges();
+                    return note;
+                }
+                return null;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

@@ -30,11 +30,11 @@ namespace FundoNote.Controllers
                 var note = noteBusiness.AddNote(noteModel, userId);
                 if (note != null)
                 {
-                    return Ok(new {sucess = true, message = "Note Added Sucessfully", data = note});
+                    return Ok(new { sucess = true, message = "Note Added Sucessfully", data = note });
                 }
                 else
                 {
-                    return BadRequest(new {sucess = false, message = "Note Added Unsucessfully"});
+                    return BadRequest(new { sucess = false, message = "Note Added Unsucessfully" });
                 }
             }
             catch (System.Exception)
@@ -54,11 +54,11 @@ namespace FundoNote.Controllers
                 var update = noteBusiness.UpdateNotes(updateNote, userID);
                 if (update != null)
                 {
-                    return Ok(new {sucess = true, message = "Note Updated Sucessfully", data = update});
+                    return Ok(new { sucess = true, message = "Note Updated Sucessfully", data = update });
                 }
                 else
                 {
-                    return BadRequest(new {sucess = false, message = "Note Updated Unsucessfully"});
+                    return BadRequest(new { sucess = false, message = "Note Updated Unsucessfully" });
                 }
             }
             catch (System.Exception)
@@ -76,9 +76,11 @@ namespace FundoNote.Controllers
             try
             {
                 var note = noteBusiness.DeleteNote(deleteNote, userId);
-                if (note != null)
+                if (note)
                 {
                     return Ok(new { sucess = true, message = "Note Deleted Sucessfully" });
+                    
+                    
                 }
                 else
                 {
@@ -107,6 +109,117 @@ namespace FundoNote.Controllers
                 else
                 {
                     return BadRequest(new { sucess = false, message = "Retrive All The Note Of User" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        //Api For IsPin==============================
+        [HttpPut]
+        [Route("IsPin")]
+        public IActionResult IsPin(long noteId)
+        {
+            long userId = long.Parse(User.FindFirst("UserId").Value);
+            var note = noteBusiness.IsPin(noteId, userId);
+            if (note != null)
+            {
+                return Ok(new { sucess = true, messsage = "IsPin Change Sucessfully", data = note });
+            }
+            else
+            {
+                return BadRequest(new { sucess = false, message = "IsPin Change Unsucessful" });
+            }
+        }
+        //IsAchive Api=================
+        [HttpPut]
+        [Route("IsAchive")]
+        public IActionResult IsAchive(long noteId)
+        {
+            try
+            {
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var note = noteBusiness.IsAchive(noteId, userId);
+                if (note != null)
+                {
+                    return Ok(new { suceess = true, message = "Update IsTrash Sucesssfull", data = note });
+                }
+                else
+                {
+                    return BadRequest(new { susses = false, message = "Update Unsucessfull" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        //IsTrash Api================
+        [HttpPut]
+        [Route("IsTrash")]
+        public IActionResult IsTrash(long noteId)
+        {
+            try
+            {
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var note = noteBusiness.IsTrash(noteId, userId);
+                if (note != null)
+                {
+                    return Ok(new { sucess = true, message = "Update IsTrash Sucessfull", data = note });
+                }
+                else
+                {
+                    return BadRequest(new { sucesss = false, message = "Update Unsucesfull" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        //Color Chnaging
+        [HttpPatch]
+        [Route("Color")]
+        public IActionResult Color(long noteId, string color)
+        {
+            try
+            {
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var note = noteBusiness.Color(noteId, color, userId);
+                if (note != null)
+                {
+                    return Ok(new { sucess = true, message = "Update Color Sucessfull", data = note });
+                }
+                else
+                {
+                    return BadRequest(new { sucess = false, message = "Update Unsucessfull" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost]
+        [Route("UplodeImage")]
+        public IActionResult UploadImage(long noteid, IFormFile img)
+        {
+            try
+            {
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var note = noteBusiness.UploadImage(noteid, img, userId);
+                if (note != null)
+                {
+                    return Ok(new { sucesss = true, message = "Image Upload Sucessfull", data = note });
+                }
+                else
+                {
+                    return BadRequest(new { sucess = false, message = "Upload Faild" });
                 }
             }
             catch (System.Exception)
