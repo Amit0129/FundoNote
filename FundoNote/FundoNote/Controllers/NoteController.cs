@@ -79,8 +79,8 @@ namespace FundoNote.Controllers
                 if (note)
                 {
                     return Ok(new { sucess = true, message = "Note Deleted Sucessfully" });
-                    
-                    
+
+
                 }
                 else
                 {

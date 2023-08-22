@@ -19,6 +19,31 @@ namespace RepoLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("RepoLayer.Entities.CollaboratorEntity", b =>
+                {
+                    b.Property<int>("collaboratorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CollabEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("NoteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("collaboratorId");
+
+                    b.HasIndex("NoteId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Collaborators");
+                });
+
             modelBuilder.Entity("RepoLayer.Entities.NotesEntity", b =>
                 {
                     b.Property<long>("NoteId")
@@ -32,7 +57,7 @@ namespace RepoLayer.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Edited")
+                    b.Property<DateTime?>("Edited")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
@@ -88,6 +113,17 @@ namespace RepoLayer.Migrations
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("RepoLayer.Entities.CollaboratorEntity", b =>
+                {
+                    b.HasOne("RepoLayer.Entities.NotesEntity", "Note")
+                        .WithMany()
+                        .HasForeignKey("NoteId");
+
+                    b.HasOne("RepoLayer.Entities.UserEntity", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("RepoLayer.Entities.NotesEntity", b =>

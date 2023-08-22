@@ -163,7 +163,7 @@ namespace RepoLayer.Service
 
                 throw;
             }
-           
+
         }
         //IsTrash===================
         public NotesEntity IsTrash(long noteId, long userId)
@@ -186,7 +186,7 @@ namespace RepoLayer.Service
 
                 throw;
             }
-            
+
         }
         //Color Change Api===================
         public NotesEntity Color(long noteId, string color, long userId)
