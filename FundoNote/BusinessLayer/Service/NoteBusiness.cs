@@ -10,15 +10,15 @@ using System.Text;
 
 namespace BusinessLayer.Service
 {
-    public class NoteBusiness : INoteBusiness
-    {
+	public class NoteBusiness : INoteBusiness
+	{
 		private readonly INoteRepo noteRepo;
 		public NoteBusiness(INoteRepo noteRepo)
 		{
 			this.noteRepo = noteRepo;
 		}
-        public NotesEntity AddNote(AddNoteModel noteModel, long userId)
-        {
+		public NotesEntity AddNote(AddNoteModel noteModel, long userId)
+		{
 			try
 			{
 				return noteRepo.AddNote(noteModel, userId);
@@ -28,9 +28,9 @@ namespace BusinessLayer.Service
 
 				throw;
 			}
-        }
-        public NotesEntity UpdateNotes(UpdateNoteModel updateNote, long userId)
-        {
+		}
+		public NotesEntity UpdateNotes(UpdateNoteModel updateNote, long userId)
+		{
 			try
 			{
 				return noteRepo.UpdateNotes(updateNote, userId);
@@ -53,7 +53,7 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-        public IEnumerable<NotesEntity> GetUserNotes(long userId)
+		public IEnumerable<NotesEntity> GetUserNotes(long userId)
 		{
 			try
 			{
@@ -65,7 +65,7 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-        public NotesEntity IsPin(long noteId, long userId)
+		public NotesEntity IsPin(long noteId, long userId)
 		{
 			try
 			{
@@ -77,8 +77,8 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-		
-        public NotesEntity IsAchive(long noteId, long userId)
+
+		public NotesEntity IsAchive(long noteId, long userId)
 		{
 			try
 			{
@@ -90,8 +90,8 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-		
-        public NotesEntity IsTrash(long noteId, long userId)
+
+		public NotesEntity IsTrash(long noteId, long userId)
 		{
 			try
 			{
@@ -103,11 +103,11 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-        public NotesEntity Color(long noteId, string color, long userId)
+		public NotesEntity Color(long noteId, string color, long userId)
 		{
 			try
 			{
-				return noteRepo.Color(noteId,color, userId);
+				return noteRepo.Color(noteId, color, userId);
 			}
 			catch (Exception)
 			{
@@ -115,11 +115,11 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-        public NotesEntity UploadImage(long noteid, IFormFile img, long userId)
-        {
+		public NotesEntity UploadImage(long noteid, IFormFile img, long userId)
+		{
 			try
 			{
-				return noteRepo.UploadImage(noteid, img,userId);
+				return noteRepo.UploadImage(noteid, img, userId);
 			}
 			catch (Exception)
 			{
@@ -127,5 +127,5 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-    }
+	}
 }

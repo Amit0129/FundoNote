@@ -13,7 +13,7 @@ namespace BusinessLayer.Service
         private readonly IUserRepo userRepo;
         public UserBusiness(IUserRepo userRepo)
         {
-            this.userRepo = userRepo;   
+            this.userRepo = userRepo;
         }
 
         public UserEntity UserRegister(UserRegistrationModel model)

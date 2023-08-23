@@ -13,7 +13,7 @@ namespace BusinessLayer.Service
         private readonly ICollaboratorRepo collaboratorRepo;
         public CollaboratorBusiness(ICollaboratorRepo collaboratorRepo)
         {
-              this.collaboratorRepo = collaboratorRepo;
+            this.collaboratorRepo = collaboratorRepo;
         }
         public CollaboratorEntity AddCollab(AddCollabModel collabModel, long userId, long noteId)
         {

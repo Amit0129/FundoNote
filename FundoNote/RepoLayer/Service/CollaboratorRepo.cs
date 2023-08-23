@@ -36,7 +36,7 @@ namespace RepoLayer.Service
             }
         }
         //Delete Collab
-        public bool DeleteAColab(int colabId,long userID,long noteId)
+        public bool DeleteAColab(int colabId, long userID, long noteId)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace RepoLayer.Service
 
                 throw;
             }
-            
+
 
         }
     }

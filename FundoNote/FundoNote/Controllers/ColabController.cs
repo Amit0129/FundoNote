@@ -30,12 +30,12 @@ namespace FundoNote.Controllers
             }
             else
             {
-                return BadRequest(new {susess = false,message = "Colab Email Unsucessfull"});
+                return BadRequest(new { susess = false, message = "Colab Email Unsucessfull" });
             }
         }
         [HttpDelete]
         [Route("Delete/{colabId}/{noteId}")]
-        public IActionResult DeleteAColab(int colabId,long noteId)
+        public IActionResult DeleteAColab(int colabId, long noteId)
         {
             try
             {

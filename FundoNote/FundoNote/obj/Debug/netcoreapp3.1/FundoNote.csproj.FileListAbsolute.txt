@@ -1,3 +1,9 @@
+Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.csproj.AssemblyReference.cache
+Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.GeneratedMSBuildEditorConfig.editorconfig
+Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.AssemblyInfoInputs.cache
+Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.AssemblyInfo.cs
+Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.csproj.CoreCompileInputs.cache
+Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.MvcApplicationPartsAssemblyInfo.cache
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\appsettings.Development.json
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\appsettings.json
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\FundoNote.exe
@@ -46,13 +52,7 @@ Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\RepoLayer.dl
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\BusinessLayer.pdb
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\CommonLayer.pdb
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\bin\Debug\netcoreapp3.1\RepoLayer.pdb
-Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.csproj.AssemblyReference.cache
-Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.GeneratedMSBuildEditorConfig.editorconfig
-Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.AssemblyInfoInputs.cache
-Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.AssemblyInfo.cs
-Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.csproj.CoreCompileInputs.cache
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.MvcApplicationPartsAssemblyInfo.cs
-Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\FundoNote.MvcApplicationPartsAssemblyInfo.cache
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\staticwebassets\FundoNote.StaticWebAssets.Manifest.cache
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\staticwebassets\FundoNote.StaticWebAssets.Pack.cache
 Q:\CFP\ASP.NET Core app\FundoNote\FundoNote\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.FundoNote.Microsoft.AspNetCore.StaticWebAssets.props

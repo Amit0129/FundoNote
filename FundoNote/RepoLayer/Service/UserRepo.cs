@@ -138,7 +138,7 @@ namespace RepoLayer.Service
             }
         }
         //ResetPassword ===================
-        public bool ResetPassword(ResetPasswordModel resetPassword,string email)
+        public bool ResetPassword(ResetPasswordModel resetPassword, string email)
         {
             try
             {

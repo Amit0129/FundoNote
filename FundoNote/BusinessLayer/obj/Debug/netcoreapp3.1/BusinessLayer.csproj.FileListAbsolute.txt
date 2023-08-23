@@ -1,3 +1,8 @@
+Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.csproj.AssemblyReference.cache
+Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.AssemblyInfoInputs.cache
+Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.AssemblyInfo.cs
+Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.csproj.CoreCompileInputs.cache
 Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\bin\Debug\netcoreapp3.1\BusinessLayer.deps.json
 Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\bin\Debug\netcoreapp3.1\BusinessLayer.dll
 Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\bin\Debug\netcoreapp3.1\BusinessLayer.pdb
@@ -5,11 +10,6 @@ Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\bin\Debug\netcoreapp3.1\CommonLa
 Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\bin\Debug\netcoreapp3.1\RepoLayer.dll
 Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\bin\Debug\netcoreapp3.1\RepoLayer.pdb
 Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\bin\Debug\netcoreapp3.1\CommonLayer.pdb
-Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.csproj.AssemblyReference.cache
-Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
-Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.AssemblyInfoInputs.cache
-Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.AssemblyInfo.cs
-Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.csproj.CoreCompileInputs.cache
 Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.csproj.CopyComplete
 Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.dll
 Q:\CFP\ASP.NET Core app\FundoNote\BusinessLayer\obj\Debug\netcoreapp3.1\BusinessLayer.pdb

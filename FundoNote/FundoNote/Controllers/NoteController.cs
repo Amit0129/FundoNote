@@ -118,7 +118,7 @@ namespace FundoNote.Controllers
             }
         }
         //Api For IsPin==============================
-        [HttpPut]
+        [HttpPatch]
         [Route("IsPin")]
         public IActionResult IsPin(long noteId)
         {
@@ -134,7 +134,7 @@ namespace FundoNote.Controllers
             }
         }
         //IsAchive Api=================
-        [HttpPut]
+        [HttpPatch]
         [Route("IsAchive")]
         public IActionResult IsAchive(long noteId)
         {
@@ -158,7 +158,7 @@ namespace FundoNote.Controllers
             }
         }
         //IsTrash Api================
-        [HttpPut]
+        [HttpPatch]
         [Route("IsTrash")]
         public IActionResult IsTrash(long noteId)
         {

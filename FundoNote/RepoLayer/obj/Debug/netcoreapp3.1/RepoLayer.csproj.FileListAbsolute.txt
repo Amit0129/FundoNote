@@ -1,3 +1,8 @@
+Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.csproj.AssemblyReference.cache
+Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.GeneratedMSBuildEditorConfig.editorconfig
+Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.AssemblyInfoInputs.cache
+Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.AssemblyInfo.cs
+Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.csproj.CoreCompileInputs.cache
 Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\bin\Debug\netcoreapp3.1\RepoLayer.deps.json
 Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\bin\Debug\netcoreapp3.1\RepoLayer.runtimeconfig.json
 Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\bin\Debug\netcoreapp3.1\RepoLayer.runtimeconfig.dev.json
@@ -5,11 +10,6 @@ Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\bin\Debug\netcoreapp3.1\RepoLayer.dl
 Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\bin\Debug\netcoreapp3.1\RepoLayer.pdb
 Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\bin\Debug\netcoreapp3.1\CommonLayer.dll
 Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\bin\Debug\netcoreapp3.1\CommonLayer.pdb
-Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.csproj.AssemblyReference.cache
-Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.GeneratedMSBuildEditorConfig.editorconfig
-Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.AssemblyInfoInputs.cache
-Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.AssemblyInfo.cs
-Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.csproj.CoreCompileInputs.cache
 Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.csproj.CopyComplete
 Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.dll
 Q:\CFP\ASP.NET Core app\FundoNote\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.pdb

@@ -29,11 +29,11 @@ namespace FundoNote.Controllers
                 var result = userBusiness.UserRegister(model);
                 if (result != null)
                 {
-                    return Ok(new {sucess = true, message = "User Registration Sucesssfull",data = result});
+                    return Ok(new { sucess = true, message = "User Registration Sucesssfull", data = result });
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "User Registration Unsucesssfull"});
+                    return BadRequest(new { sucess = false, message = "User Registration Unsucesssfull" });
                 }
             }
             catch (System.Exception)
@@ -50,7 +50,7 @@ namespace FundoNote.Controllers
             {
                 if (user != null)
                 {
-                    return Ok(new { sucess = true, message = "User Login Sucesssfull",data = user });
+                    return Ok(new { sucess = true, message = "User Login Sucesssfull", data = user });
                 }
                 else
                 {
@@ -70,9 +70,9 @@ namespace FundoNote.Controllers
             try
             {
                 var user = userBusiness.ForgetPassword(forgetPassword);
-                if (user!=null)
+                if (user != null)
                 {
-                    return Ok(new { sucess = true, message = "User Forget Password Sucesssfull",Token = user});
+                    return Ok(new { sucess = true, message = "User Forget Password Sucesssfull", Token = user });
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace FundoNote.Controllers
             try
             {
                 var email = User.FindFirst(ClaimTypes.Email).Value.ToString();
-                
+
                 var user = userBusiness.ResetPassword(resetPassword, email);
                 if (user)
                 {
@@ -102,7 +102,7 @@ namespace FundoNote.Controllers
                 {
                     return Ok(new { sucess = false, message = "Reset Password Unsucesssfull" });
                 }
-                
+
             }
             catch (System.Exception)
             {
@@ -132,6 +132,6 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
-       
+
     }
 }
