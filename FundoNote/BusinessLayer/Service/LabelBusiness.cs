@@ -51,11 +51,23 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool DeleteLabel(long userId, long noteId, long labelId)
+        public LabelEntity UpdateLabel(long userId, long labelId, string labelName)
         {
             try
             {
-                return labelRepo.DeleteLabel(userId, noteId, labelId);
+                return labelRepo.UpdateLabel(userId, labelId, labelName);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool DeleteLabel(long userId, long labelId)
+        {
+            try
+            {
+                return labelRepo.DeleteLabel(userId, labelId);
             }
             catch (Exception)
             {

@@ -42,7 +42,7 @@ namespace FundoNote.Controllers
             }
         }
         [HttpGet]
-        [Route("GetAllNote")]
+        [Route("GetAllLabels")]
         public IActionResult GetLabels()
         {
             try
@@ -57,6 +57,26 @@ namespace FundoNote.Controllers
                 {
                     return BadRequest(new { sucess = false, message = "Retrive Faild" });
                 }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPatch]
+        [Route("Update/{labelId}/{labelName}")]
+        public IActionResult UpdateLabel(long labelId, string labelName)
+        {
+            try
+            {
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var label = labelBusiness.UpdateLabel(userId,labelId,labelName);
+                if (label != null)
+                {
+                    return Ok(new { sucess = true, message = "Update Sucessfull", data = label });
+                }
+                return BadRequest(new { sucess = false, message = "Update Failed" });
             }
             catch (System.Exception)
             {
@@ -88,13 +108,13 @@ namespace FundoNote.Controllers
             }
         }
         [HttpDelete]
-        [Route("DeleteLabel/{noteId}/{labelId}")]
-        public IActionResult DeleteLabel(long noteId, long labelId)
+        [Route("DeleteLabel/{labelId}")]
+        public IActionResult DeleteLabel(long labelId)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var label = labelBusiness.DeleteLabel(userId, noteId, labelId);
+                var label = labelBusiness.DeleteLabel(userId,labelId);
                 if (label)
                 {
                     return Ok(new { sucess = true, message = "Delete Label SucessFull" });

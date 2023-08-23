@@ -61,12 +61,32 @@ namespace RepoLayer.Service
                 throw;
             }
         }
-        //Delete Label
-        public bool DeleteLabel(long userId, long noteId, long labelId)
+        //Update label
+        public LabelEntity UpdateLabel(long userId, long labelId, string labelName)
         {
             try
             {
-                var label = context.Labels.FirstOrDefault(x => x.UserId == userId && x.NoteId == noteId && x.LabelId == labelId);
+                var label = context.Labels.FirstOrDefault(x=>x.UserId == userId &&x.LabelId == labelId);
+                if (label != null)
+                {
+                    label.LabelName = labelName;
+                    context.SaveChanges();
+                    return label;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        //Delete Label
+        public bool DeleteLabel(long userId,long labelId)
+        {
+            try
+            {
+                var label = context.Labels.FirstOrDefault(x => x.UserId == userId && x.LabelId == labelId);
                 if (label != null)
                 {
                     context.Labels.Remove(label);
