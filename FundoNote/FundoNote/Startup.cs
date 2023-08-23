@@ -42,6 +42,8 @@ namespace FundoNote
             services.AddTransient<INoteRepo, NoteRepo>();
             services.AddTransient<ICollaboratorRepo, CollaboratorRepo>();
             services.AddTransient<ICollaboratorBusiness, CollaboratorBusiness>();
+            services.AddTransient<ILabelRepo, LabelRepo>();
+            services.AddTransient<ILabelBusiness, LabelBusiness>();
             services.AddAuthentication(au =>
             {
                 au.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -44,6 +44,31 @@ namespace RepoLayer.Migrations
                     b.ToTable("Collaborators");
                 });
 
+            modelBuilder.Entity("RepoLayer.Entities.LabelEntity", b =>
+                {
+                    b.Property<long>("LabelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LabelName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("NoteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("LabelId");
+
+                    b.HasIndex("NoteId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("labels");
+                });
+
             modelBuilder.Entity("RepoLayer.Entities.NotesEntity", b =>
                 {
                     b.Property<long>("NoteId")
@@ -124,6 +149,21 @@ namespace RepoLayer.Migrations
                     b.HasOne("RepoLayer.Entities.UserEntity", "user")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("RepoLayer.Entities.LabelEntity", b =>
+                {
+                    b.HasOne("RepoLayer.Entities.NotesEntity", "Note")
+                        .WithMany()
+                        .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RepoLayer.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RepoLayer.Entities.NotesEntity", b =>
