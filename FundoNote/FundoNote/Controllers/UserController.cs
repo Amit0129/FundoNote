@@ -8,6 +8,7 @@ using RepoLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FundoNote.Controllers
 {
@@ -22,11 +23,11 @@ namespace FundoNote.Controllers
         }
         [HttpPost]
         [Route("Register")]
-        public IActionResult UserRegister(UserRegistrationModel model)
+        public async Task<IActionResult> UserRegister(UserRegistrationModel model)
         {
             try
             {
-                var result = userBusiness.UserRegister(model);
+                var result = await userBusiness.UserRegister(model);
                 if (result != null)
                 {
                     return Ok(new { sucess = true, message = "User Registration Sucesssfull", data = result });
@@ -43,11 +44,11 @@ namespace FundoNote.Controllers
             }
         }
         [HttpPost("Login")]
-        public IActionResult UserLogin(UserLoginModel loginModel)
+        public async Task<IActionResult> UserLogin(UserLoginModel loginModel)
         {
-            var user = userBusiness.UserLogin(loginModel);
             try
             {
+                var user = await userBusiness.UserLogin(loginModel);
                 if (user != null)
                 {
                     return Ok(new { sucess = true, message = "User Login Sucesssfull", data = user });
@@ -64,12 +65,12 @@ namespace FundoNote.Controllers
             }
         }
         [HttpPost]
-        [Route("Forget-Password")]
-        public IActionResult ForgetPassword(ForgetPasswordModel forgetPassword)
+        [Route("ForgetPassword")]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordModel forgetPassword)
         {
             try
             {
-                var user = userBusiness.ForgetPassword(forgetPassword);
+                var user = await userBusiness.ForgetPassword(forgetPassword);
                 if (user != null)
                 {
                     return Ok(new { sucess = true, message = "User Forget Password Sucesssfull", Token = user });
@@ -87,13 +88,13 @@ namespace FundoNote.Controllers
         }
         [Authorize]
         [HttpPut("ResetPassword")]
-        public IActionResult ResetPassword(ResetPasswordModel resetPassword)
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPassword)
         {
             try
             {
                 var email = User.FindFirst(ClaimTypes.Email).Value.ToString();
 
-                var user = userBusiness.ResetPassword(resetPassword, email);
+                var user = await userBusiness.ResetPassword(resetPassword, email);
                 if (user)
                 {
                     return Ok(new { sucess = true, message = "Reset Password Sucesssfull" });
@@ -112,11 +113,11 @@ namespace FundoNote.Controllers
         }
         [HttpGet]
         [Route("Users")]
-        public IActionResult GetAllUserData()
+        public async Task<IActionResult> GetAllUserData()
         {
             try
             {
-                var userData = userBusiness.GetAllUserData();
+                var userData = await userBusiness.GetAllUserData();
                 if (userData != null)
                 {
                     return Ok(new { sucess = true, message = "Data Retrive SucessFully", data = userData });

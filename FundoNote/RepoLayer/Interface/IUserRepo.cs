@@ -4,16 +4,17 @@ using RepoLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepoLayer.Interface
 {
     public interface IUserRepo
     {
-        public UserEntity UserRegister(UserRegistrationModel model);
-        public string UserLogin(UserLoginModel loginModel);
+        public Task<UserEntity> UserRegister(UserRegistrationModel model);
+        public Task<UserLogInResult> UserLogin(UserLoginModel loginModel);
+        public Task<string> ForgetPassword(ForgetPasswordModel forgetPassword);
+        public Task<bool> ResetPassword(ResetPasswordModel resetPassword, string email);
         public string JWTTokenGenerator(long userid, string email);
-        public string ForgetPassword(ForgetPasswordModel forgetPassword);
-        public bool ResetPassword(ResetPasswordModel resetPassword, string email);
-        public List<UserEntity> GetAllUserData();
+        public Task<List<UserEntity>> GetAllUserData();
     }
 }

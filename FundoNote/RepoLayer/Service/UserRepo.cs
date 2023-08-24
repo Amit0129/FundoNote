@@ -1,5 +1,6 @@
 ﻿using CommonLayer;
 using CommonLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RepoLayer.Context;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepoLayer.Service
 {
@@ -24,22 +26,7 @@ namespace RepoLayer.Service
             this.fundoContext = fundoContext;
             this.Iconfiguration = Iconfiguration;
         }
-        //public string EncryptPassword(string password)
-        //{
-        //    try
-        //    {
-        //        byte[] encode = new byte[password.Length];
-        //        encode = Encoding.UTF8.GetBytes(password);
-        //        string encriptPassword = Convert.ToBase64String(encode);
-        //        return encriptPassword;
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
-        public UserEntity UserRegister(UserRegistrationModel model)
+        public async Task<UserEntity> UserRegister(UserRegistrationModel model)
         {
             try
             {
@@ -50,7 +37,7 @@ namespace RepoLayer.Service
                 userEntity.Password = EncryptAndDrcrypy.ConvertToEncrypt(model.Password);
 
                 fundoContext.Users.Add(userEntity);
-                fundoContext.SaveChanges();
+                fundoContext.SaveChangesAsync();
                 if (userEntity != null)
                 {
                     return userEntity;
@@ -67,13 +54,12 @@ namespace RepoLayer.Service
             }
         }
         //User Log in=========================
-        public string UserLogin(UserLoginModel loginModel)
+        public async Task<UserLogInResult> UserLogin(UserLoginModel loginModel)
         {
             try
             {
-                UserEntity userEntityLogin = new UserEntity();
                 var encryptPassword = EncryptAndDrcrypy.ConvertToEncrypt(loginModel.Password);
-                userEntityLogin = fundoContext.Users.FirstOrDefault(x => x.Email == loginModel.Email && x.Password == encryptPassword);
+                var userEntityLogin = await fundoContext.Users.FirstOrDefaultAsync(x => x.Email == loginModel.Email && x.Password == encryptPassword);
 
                 if (userEntityLogin == null)
                 {
@@ -81,10 +67,11 @@ namespace RepoLayer.Service
                 }
                 else
                 {
-                    var id = userEntityLogin.UserID;
-                    var email = userEntityLogin.Email;
-                    var token = JWTTokenGenerator(id, email);
-                    return token;
+                    return new UserLogInResult()
+                    {
+                        UserEntity = userEntityLogin,
+                        Token = JWTTokenGenerator(userEntityLogin.UserID, userEntityLogin.Email)
+                    };
                 }
             }
             catch (Exception)
@@ -112,11 +99,11 @@ namespace RepoLayer.Service
             return tokenHanler.WriteToken(token);
         }
         //Forget Password==========================
-        public string ForgetPassword(ForgetPasswordModel forgetPassword)
+        public async Task<string> ForgetPassword(ForgetPasswordModel forgetPassword)
         {
             try
             {
-                var user = fundoContext.Users.Where(x => x.Email == forgetPassword.Email).FirstOrDefault();
+                var user = await fundoContext.Users.Where(x => x.Email == forgetPassword.Email).FirstOrDefaultAsync();
                 var userEmail = user.Email;
                 var id = user.UserID;
                 if (user != null)
@@ -138,17 +125,17 @@ namespace RepoLayer.Service
             }
         }
         //ResetPassword ===================
-        public bool ResetPassword(ResetPasswordModel resetPassword, string email)
+        public async Task<bool> ResetPassword(ResetPasswordModel resetPassword, string email)
         {
             try
             {
                 UserEntity user = new UserEntity();
-                user = fundoContext.Users.FirstOrDefault(x => x.Email == email);
+                user = await fundoContext.Users.FirstOrDefaultAsync(x => x.Email == email);
                 if (user != null && resetPassword.NewPassword == resetPassword.ConfirmPassword)
                 {
                     user.Password = EncryptAndDrcrypy.ConvertToEncrypt(resetPassword.NewPassword);
                     //fundoContext.Users.Update(user);
-                    fundoContext.SaveChanges();
+                    fundoContext.SaveChangesAsync();
                     return true;
                 }
                 return false;
@@ -160,12 +147,11 @@ namespace RepoLayer.Service
             }
         }
         //Get All User Data========================
-        public List<UserEntity> GetAllUserData()
+        public async Task<List<UserEntity>> GetAllUserData()
         {
             try
             {
-                //UserEntity userEntityLogin = new UserEntity();
-                var userData = fundoContext.Users.ToList();
+                var userData = await fundoContext.Users.ToListAsync();
                 if (userData != null)
                 {
                     return userData;

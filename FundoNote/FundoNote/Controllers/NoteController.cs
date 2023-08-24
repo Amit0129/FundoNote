@@ -21,7 +21,6 @@ namespace FundoNote.Controllers
         }
         //Add Note Api=========================
         [HttpPost]
-        [Route("AddNote")]
         public IActionResult AddNote(AddNoteModel noteModel)
         {
             try
@@ -45,7 +44,6 @@ namespace FundoNote.Controllers
         }
         //Update Api======================
         [HttpPut]
-        [Route("Update")]
         public IActionResult UpdateNotes(UpdateNoteModel updateNote)
         {
             try
@@ -69,7 +67,6 @@ namespace FundoNote.Controllers
         }
         //Delete  Api=======================
         [HttpDelete]
-        [Route("Delete")]
         public IActionResult DeleteNote(DeleteNoteModel deleteNote)
         {
             long userId = long.Parse(User.FindFirst("UserId").Value);
@@ -95,7 +92,6 @@ namespace FundoNote.Controllers
         }
         //Get Notes of a User======================
         [HttpGet]
-        [Route("GetUserNotes")]
         public IActionResult GetUserNotes()
         {
             try
@@ -206,7 +202,7 @@ namespace FundoNote.Controllers
             }
         }
         [HttpPost]
-        [Route("UplodeImage")]
+        [Route("Image")]
         public IActionResult UploadImage(long noteid, IFormFile img)
         {
             try

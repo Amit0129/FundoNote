@@ -5,6 +5,7 @@ using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.Service
 {
@@ -16,11 +17,11 @@ namespace BusinessLayer.Service
             this.userRepo = userRepo;
         }
 
-        public UserEntity UserRegister(UserRegistrationModel model)
+        public async Task<UserEntity> UserRegister(UserRegistrationModel model)
         {
             try
             {
-                return userRepo.UserRegister(model);
+                return await userRepo.UserRegister(model);
             }
             catch (Exception)
             {
@@ -29,11 +30,11 @@ namespace BusinessLayer.Service
             }
             //throw new NotImplementedException();
         }
-        public string UserLogin(UserLoginModel loginModel)
+        public async Task<UserLogInResult> UserLogin(UserLoginModel loginModel)
         {
             try
             {
-                return userRepo.UserLogin(loginModel);
+                return await userRepo.UserLogin(loginModel);
             }
             catch (Exception)
             {
@@ -53,11 +54,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public string ForgetPassword(ForgetPasswordModel forgetPassword)
+        public async Task<string> ForgetPassword(ForgetPasswordModel forgetPassword)
         {
             try
             {
-                return userRepo.ForgetPassword(forgetPassword);
+                return await userRepo.ForgetPassword(forgetPassword);
             }
             catch (Exception)
             {
@@ -65,11 +66,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool ResetPassword(ResetPasswordModel resetPassword, string email)
+        public async Task<bool> ResetPassword(ResetPasswordModel resetPassword, string email)
         {
             try
             {
-                return userRepo.ResetPassword(resetPassword, email);
+                return await userRepo.ResetPassword(resetPassword, email);
             }
             catch (Exception)
             {
@@ -77,11 +78,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public List<UserEntity> GetAllUserData()
+        public async Task<List<UserEntity>> GetAllUserData()
         {
             try
             {
-                return userRepo.GetAllUserData();
+                return await userRepo.GetAllUserData();
             }
             catch (Exception)
             {

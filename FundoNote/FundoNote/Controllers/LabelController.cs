@@ -42,7 +42,6 @@ namespace FundoNote.Controllers
             }
         }
         [HttpGet]
-        [Route("GetAllLabels")]
         public IActionResult GetLabels()
         {
             try
