@@ -5,6 +5,7 @@ using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.Service
 {
@@ -15,11 +16,11 @@ namespace BusinessLayer.Service
         {
             this.collaboratorRepo = collaboratorRepo;
         }
-        public CollaboratorEntity AddCollab(AddCollabModel collabModel, long userId, long noteId)
+        public async Task<CollaboratorEntity> AddCollab(AddCollabModel collabModel, long userId, long noteId)
         {
             try
             {
-                return collaboratorRepo.AddCollab(collabModel, userId, noteId);
+                return await collaboratorRepo.AddCollab(collabModel, userId, noteId);
             }
             catch (Exception)
             {
@@ -27,13 +28,13 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool DeleteAColab(int colabId, long userID, long noteId)
+        public async Task<bool> DeleteAColab(int colabId, long userID, long noteId)
         {
             try
             {
                 try
                 {
-                    return collaboratorRepo.DeleteAColab(colabId, userID, noteId);
+                    return await collaboratorRepo.DeleteAColab(colabId, userID, noteId);
                 }
                 catch (Exception)
                 {
@@ -47,11 +48,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public IEnumerable<CollaboratorEntity> GetAllCollab(long userID, long noteId)
+        public async Task<IEnumerable<CollaboratorEntity>> GetAllCollab(long userID, long noteId)
         {
             try
             {
-                return collaboratorRepo.GetAllCollab(userID, noteId);
+                return await collaboratorRepo.GetAllCollab(userID, noteId);
             }
             catch (Exception)
             {

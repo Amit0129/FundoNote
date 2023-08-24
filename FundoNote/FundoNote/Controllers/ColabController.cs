@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepoLayer.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FundoNote.Controllers
 {
@@ -20,10 +21,10 @@ namespace FundoNote.Controllers
         }
         [HttpPost]
         [Route("Colab/{noteId}")]
-        public IActionResult AddCollab(AddCollabModel collabModel, long noteId)
+        public async Task<IActionResult> AddCollab(AddCollabModel collabModel, long noteId)
         {
             long userId = long.Parse(User.FindFirst("UserId").Value);
-            var colab = collaboratorBusiness.AddCollab(collabModel, userId, noteId);
+            var colab = await collaboratorBusiness.AddCollab(collabModel, userId, noteId);
             if (colab != null)
             {
                 return Ok(new { sucess = true, message = "Colab Email Sucessfull", data = colab });
@@ -35,12 +36,12 @@ namespace FundoNote.Controllers
         }
         [HttpDelete]
         [Route("Delete/{colabId}/{noteId}")]
-        public IActionResult DeleteAColab(int colabId, long noteId)
+        public async Task<IActionResult> DeleteAColab(int colabId, long noteId)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var colab = collaboratorBusiness.DeleteAColab(colabId, userId, noteId);
+                var colab = await collaboratorBusiness.DeleteAColab(colabId, userId, noteId);
                 if (colab)
                 {
                     return Ok(new { sucess = true, message = "Colab Deleted Sucessfull", data = colab });
@@ -58,12 +59,12 @@ namespace FundoNote.Controllers
         }
         [HttpGet]
         [Route("GetColab")]
-        public IActionResult GetAllCollab(long noteId)
+        public async Task<IActionResult> GetAllCollab(long noteId)
         {
             long userID = long.Parse(User.FindFirst("UserId").Value);
             try
             {
-                var colab = collaboratorBusiness.GetAllCollab(userID, noteId);
+                var colab = await collaboratorBusiness.GetAllCollab(userID, noteId);
                 if (colab != null)
                 {
                     return Ok(new { sucess = true, message = "Retrive Colab Sucessfull", data = colab });

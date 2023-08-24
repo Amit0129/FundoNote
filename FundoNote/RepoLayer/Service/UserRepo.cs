@@ -36,8 +36,8 @@ namespace RepoLayer.Service
                 userEntity.Email = model.Email;
                 userEntity.Password = EncryptAndDrcrypy.ConvertToEncrypt(model.Password);
 
-                fundoContext.Users.Add(userEntity);
-                fundoContext.SaveChangesAsync();
+                await fundoContext.Users.AddAsync(userEntity);
+                await fundoContext.SaveChangesAsync();
                 if (userEntity != null)
                 {
                     return userEntity;
@@ -135,7 +135,7 @@ namespace RepoLayer.Service
                 {
                     user.Password = EncryptAndDrcrypy.ConvertToEncrypt(resetPassword.NewPassword);
                     //fundoContext.Users.Update(user);
-                    fundoContext.SaveChangesAsync();
+                    await fundoContext.SaveChangesAsync();
                     return true;
                 }
                 return false;

@@ -28,7 +28,7 @@ namespace RepoLayer.Service
                 label.UserId = userId;
                 label.NoteId = noteId;
                 context.Update(label);
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return label;
             }
             catch (Exception)
@@ -46,7 +46,7 @@ namespace RepoLayer.Service
                 if (label != null)
                 {
                     label.LabelName = labelName;
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     return label;
                 }
                 return null;
@@ -66,7 +66,7 @@ namespace RepoLayer.Service
                 if (label != null)
                 {
                     context.Labels.Remove(label);
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     return true;
                 }
                 return false;

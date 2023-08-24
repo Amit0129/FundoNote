@@ -45,8 +45,8 @@ namespace RepoLayer.Service
                 notesEntity.Created = DateTime.Now;
                 notesEntity.Edited = DateTime.Now;
                 notesEntity.UserId = userId;
-                context.Notes.Add(notesEntity);
-                context.SaveChangesAsync();
+                await context.Notes.AddAsync(notesEntity);
+                await context.SaveChangesAsync();
                 if (notesEntity != null)
                 {
                     return notesEntity;
@@ -79,7 +79,7 @@ namespace RepoLayer.Service
                     note.IsTrash = updateNote.IsTrash;
                     note.Edited = DateTime.Now;
                     //context.Notes.Update(note);
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     return note;
                 }
                 return null;
@@ -99,7 +99,7 @@ namespace RepoLayer.Service
                 if (note != null)
                 {
                     context.Notes.Remove(note);
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     return true;
                 }
                 return false;
@@ -131,11 +131,11 @@ namespace RepoLayer.Service
                 if (note.IsPin == true)
                 {
                     note.IsPin = false;
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     return note;
                 }
                 note.IsPin = true;
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return note;
             }
             catch (Exception)
@@ -153,11 +153,11 @@ namespace RepoLayer.Service
                 if (note.IsAechive == true)
                 {
                     note.IsAechive = false;
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     return note;
                 }
                 note.IsAechive = true;
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return note;
             }
             catch (Exception)
@@ -176,11 +176,11 @@ namespace RepoLayer.Service
                 if (note.IsTrash == true)
                 {
                     note.IsTrash = false;
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     return note;
                 }
                 note.IsTrash = true;
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return note;
             }
             catch (Exception)
@@ -198,11 +198,11 @@ namespace RepoLayer.Service
                 if (note != null)
                 {
                     note.Color = color;
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     return note;
                 }
                 note.Color = color;
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return note;
             }
             catch (Exception)
@@ -228,7 +228,7 @@ namespace RepoLayer.Service
                     var uploadresult = cloud.Upload(uploadParams).SecureUrl;
                     note.Image = uploadresult.ToString();
                     context.Notes.Update(note);
-                    context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                     return note;
                 }
                 return null;

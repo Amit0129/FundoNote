@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using RepoLayer.Context;
 using RepoLayer.Entities;
 using RepoLayer.Interface;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepoLayer.Service
 {
@@ -17,7 +19,7 @@ namespace RepoLayer.Service
             this.context = context;
         }
         //Add Collab 
-        public CollaboratorEntity AddCollab(AddCollabModel collabModel, long userId, long noteId)
+        public async Task<CollaboratorEntity> AddCollab(AddCollabModel collabModel, long userId, long noteId)
         {
             try
             {
@@ -25,8 +27,8 @@ namespace RepoLayer.Service
                 collaboratorEntity.UserId = userId;
                 collaboratorEntity.NoteId = noteId;
                 collaboratorEntity.CollabEmail = collabModel.Email;
-                context.Collaborators.Add(collaboratorEntity);
-                context.SaveChanges();
+                await context.Collaborators.AddAsync(collaboratorEntity);
+                await context.SaveChangesAsync();
                 return collaboratorEntity;
             }
             catch (Exception)
@@ -36,15 +38,15 @@ namespace RepoLayer.Service
             }
         }
         //Delete Collab
-        public bool DeleteAColab(int colabId, long userID, long noteId)
+        public async Task<bool> DeleteAColab(int colabId, long userID, long noteId)
         {
             try
             {
-                var colab = context.Collaborators.FirstOrDefault(x => x.collaboratorId == colabId && x.UserId == userID && x.NoteId == noteId);
+                var colab =await context.Collaborators.FirstOrDefaultAsync(x => x.collaboratorId == colabId && x.UserId == userID && x.NoteId == noteId);
                 if (colab != null)
                 {
                     context.Remove(colab);
-                    context.SaveChanges(true);
+                    await context.SaveChangesAsync(true);
                     return true;
                 }
                 return false;
@@ -56,11 +58,11 @@ namespace RepoLayer.Service
             }
         }
         //Get All Colab Email 
-        public IEnumerable<CollaboratorEntity> GetAllCollab(long userID, long noteId)
+        public async Task<IEnumerable<CollaboratorEntity>> GetAllCollab(long userID, long noteId)
         {
             try
             {
-                return context.Collaborators.Where(x => x.UserId == userID && x.NoteId == noteId).ToList();
+                return await context.Collaborators.Where(x => x.UserId == userID && x.NoteId == noteId).ToListAsync();
             }
             catch (Exception)
             {
