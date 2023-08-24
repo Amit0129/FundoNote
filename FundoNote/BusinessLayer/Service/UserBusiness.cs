@@ -42,11 +42,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public string JWTTokenGenerator(long userid, string email)
+        public async Task<string> JWTTokenGenerator(long userid, string email)
         {
             try
             {
-                return userRepo.JWTTokenGenerator(userid, email);
+                return await userRepo.JWTTokenGenerator(userid, email);
             }
             catch (Exception)
             {

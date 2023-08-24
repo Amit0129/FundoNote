@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepoLayer.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FundoNote.Controllers
 {
@@ -20,12 +21,12 @@ namespace FundoNote.Controllers
         }
         [HttpPost]
         [Route("AddLabel/{noteId}")]
-        public IActionResult AddLabel(AddLabelModel addLabel, long noteId)
+        public async Task<IActionResult> AddLabel(AddLabelModel addLabel, long noteId)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var label = labelBusiness.AddLabel(addLabel, userId, noteId);
+                var label = await labelBusiness.AddLabel(addLabel, userId, noteId);
                 if (label != null)
                 {
                     return Ok(new { sucess = true, messaage = "Label Added Sucessfull", data = label });
@@ -41,36 +42,14 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
-        [HttpGet]
-        public IActionResult GetLabels()
-        {
-            try
-            {
-                long userId = long.Parse(User.FindFirst("UserId").Value);
-                var label = labelBusiness.GetLabels(userId);
-                if (label != null)
-                {
-                    return Ok(new { sucess = true, message = "Retrive Label SucessFull", data = label });
-                }
-                else
-                {
-                    return BadRequest(new { sucess = false, message = "Retrive Faild" });
-                }
-            }
-            catch (System.Exception)
-            {
-
-                throw;
-            }
-        }
         [HttpPatch]
         [Route("Update/{labelId}/{labelName}")]
-        public IActionResult UpdateLabel(long labelId, string labelName)
+        public async Task<IActionResult> UpdateLabel(long labelId, string labelName)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var label = labelBusiness.UpdateLabel(userId,labelId,labelName);
+                var label = await labelBusiness.UpdateLabel(userId, labelId, labelName);
                 if (label != null)
                 {
                     return Ok(new { sucess = true, message = "Update Sucessfull", data = label });
@@ -83,14 +62,36 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
-        [HttpGet]
-        [Route("GetLabelById/{noteId}")]
-        public IActionResult GetLabelsByNote(long noteId)
+        [HttpDelete]
+        [Route("DeleteLabel/{labelId}")]
+        public async Task<IActionResult> DeleteLabel(long labelId)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var label = labelBusiness.GetLabelsByNote(userId, noteId);
+                var label = await labelBusiness.DeleteLabel(userId, labelId);
+                if (label)
+                {
+                    return Ok(new { sucess = true, message = "Delete Label SucessFull" });
+                }
+                else
+                {
+                    return BadRequest(new { sucess = false, message = "Delete Faild" });
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetLabels()
+        {
+            try
+            {
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var label = await labelBusiness.GetLabels(userId);
                 if (label != null)
                 {
                     return Ok(new { sucess = true, message = "Retrive Label SucessFull", data = label });
@@ -106,21 +107,21 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
-        [HttpDelete]
-        [Route("DeleteLabel/{labelId}")]
-        public IActionResult DeleteLabel(long labelId)
+        [HttpGet]
+        [Route("GetLabelById/{noteId}")]
+        public async Task<IActionResult> GetLabelsByNote(long noteId)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var label = labelBusiness.DeleteLabel(userId,labelId);
-                if (label)
+                var label = await labelBusiness.GetLabelsByNote(userId, noteId);
+                if (label != null)
                 {
-                    return Ok(new { sucess = true, message = "Delete Label SucessFull" });
+                    return Ok(new { sucess = true, message = "Retrive Label SucessFull", data = label });
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Delete Faild" });
+                    return BadRequest(new { sucess = false, message = "Retrive Faild" });
                 }
             }
             catch (System.Exception)

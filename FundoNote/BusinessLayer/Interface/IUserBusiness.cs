@@ -13,7 +13,7 @@ namespace BusinessLayer.Interface
         public Task<UserLogInResult> UserLogin(UserLoginModel loginModel);
         public Task<string> ForgetPassword(ForgetPasswordModel forgetPassword);
         public Task<bool> ResetPassword(ResetPasswordModel resetPassword, string email);
-        public string JWTTokenGenerator(long userid, string email);
+        public Task<string> JWTTokenGenerator(long userid, string email);
         public Task<List<UserEntity>> GetAllUserData();
     }
 }

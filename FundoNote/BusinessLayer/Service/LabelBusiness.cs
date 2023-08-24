@@ -5,6 +5,7 @@ using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.Service
 {
@@ -15,11 +16,11 @@ namespace BusinessLayer.Service
         {
             this.labelRepo = labelRepo;
         }
-        public LabelEntity AddLabel(AddLabelModel addLabel, long userId, long noteId)
+        public async Task<LabelEntity> AddLabel(AddLabelModel addLabel, long userId, long noteId)
         {
             try
             {
-                return labelRepo.AddLabel(addLabel, userId, noteId);
+                return await labelRepo.AddLabel(addLabel, userId, noteId);
             }
             catch (Exception)
             {
@@ -27,11 +28,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public IEnumerable<LabelEntity> GetLabels(long userId)
+        public async Task<LabelEntity> UpdateLabel(long userId, long labelId, string labelName)
         {
             try
             {
-                return labelRepo.GetLabels(userId);
+                return await labelRepo.UpdateLabel(userId, labelId, labelName);
             }
             catch (Exception)
             {
@@ -39,11 +40,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public IEnumerable<LabelEntity> GetLabelsByNote(long userId, long noteId)
+        public async Task<bool> DeleteLabel(long userId, long labelId)
         {
             try
             {
-                return labelRepo.GetLabelsByNote(userId, noteId);
+                return await labelRepo.DeleteLabel(userId, labelId);
             }
             catch (Exception)
             {
@@ -51,11 +52,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public LabelEntity UpdateLabel(long userId, long labelId, string labelName)
+        public async Task<IEnumerable<LabelEntity>> GetLabels(long userId)
         {
             try
             {
-                return labelRepo.UpdateLabel(userId, labelId, labelName);
+                return await labelRepo.GetLabels(userId);
             }
             catch (Exception)
             {
@@ -63,11 +64,11 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public bool DeleteLabel(long userId, long labelId)
+        public async Task<IEnumerable<LabelEntity>> GetLabelsByNote(long userId, long noteId)
         {
             try
             {
-                return labelRepo.DeleteLabel(userId, labelId);
+                return await labelRepo.GetLabelsByNote(userId, noteId);
             }
             catch (Exception)
             {

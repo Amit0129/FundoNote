@@ -70,7 +70,7 @@ namespace RepoLayer.Service
                     return new UserLogInResult()
                     {
                         UserEntity = userEntityLogin,
-                        Token = JWTTokenGenerator(userEntityLogin.UserID, userEntityLogin.Email)
+                        Token = await JWTTokenGenerator(userEntityLogin.UserID, userEntityLogin.Email)
                     };
                 }
             }
@@ -81,7 +81,7 @@ namespace RepoLayer.Service
             }
         }
         //Generate JWT Token=============================================
-        public string JWTTokenGenerator(long userid, string email)
+        public async Task<string> JWTTokenGenerator(long userid, string email)
         {
             var tokenHanler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Iconfiguration["Jwt:Key"]);
@@ -108,7 +108,7 @@ namespace RepoLayer.Service
                 var id = user.UserID;
                 if (user != null)
                 {
-                    var token = JWTTokenGenerator(id, userEmail);
+                    var token =await JWTTokenGenerator(id, userEmail);
                     MSMQ msmq = new MSMQ();
                     msmq.sendData2Queue(token);
                     return token;

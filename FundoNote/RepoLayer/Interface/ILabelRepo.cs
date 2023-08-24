@@ -3,15 +3,16 @@ using RepoLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepoLayer.Interface
 {
     public interface ILabelRepo
     {
-        public LabelEntity AddLabel(AddLabelModel addLabel, long userId, long noteId);
-        public IEnumerable<LabelEntity> GetLabels(long userId);
-        public IEnumerable<LabelEntity> GetLabelsByNote(long userId, long noteId);
-        public LabelEntity UpdateLabel(long userId, long labelId, string labelName);
-        public bool DeleteLabel(long userId, long labelId);
+        public Task<LabelEntity> AddLabel(AddLabelModel addLabel, long userId, long noteId);
+        public Task<LabelEntity> UpdateLabel(long userId, long labelId, string labelName);
+        public Task<bool> DeleteLabel(long userId, long labelId);
+        public Task<IEnumerable<LabelEntity>> GetLabels(long userId);
+        public Task<IEnumerable<LabelEntity>> GetLabelsByNote(long userId, long noteId);
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepoLayer.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FundoNote.Controllers
@@ -21,12 +22,12 @@ namespace FundoNote.Controllers
         }
         //Add Note Api=========================
         [HttpPost]
-        public IActionResult AddNote(AddNoteModel noteModel)
+        public async Task<IActionResult> AddNote(AddNoteModel noteModel)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var note = noteBusiness.AddNote(noteModel, userId);
+                var note = await noteBusiness.AddNote(noteModel, userId);
                 if (note != null)
                 {
                     return Ok(new { sucess = true, message = "Note Added Sucessfully", data = note });
@@ -44,12 +45,12 @@ namespace FundoNote.Controllers
         }
         //Update Api======================
         [HttpPut]
-        public IActionResult UpdateNotes(UpdateNoteModel updateNote)
+        public async Task<IActionResult> UpdateNotes(UpdateNoteModel updateNote)
         {
             try
             {
                 var userID = long.Parse(User.FindFirst("UserId").Value);
-                var update = noteBusiness.UpdateNotes(updateNote, userID);
+                var update =await noteBusiness.UpdateNotes(updateNote, userID);
                 if (update != null)
                 {
                     return Ok(new { sucess = true, message = "Note Updated Sucessfully", data = update });
@@ -67,12 +68,12 @@ namespace FundoNote.Controllers
         }
         //Delete  Api=======================
         [HttpDelete]
-        public IActionResult DeleteNote(DeleteNoteModel deleteNote)
+        public async Task<IActionResult> DeleteNote(DeleteNoteModel deleteNote)
         {
             long userId = long.Parse(User.FindFirst("UserId").Value);
             try
             {
-                var note = noteBusiness.DeleteNote(deleteNote, userId);
+                var note = await noteBusiness.DeleteNote(deleteNote, userId);
                 if (note)
                 {
                     return Ok(new { sucess = true, message = "Note Deleted Sucessfully" });
@@ -92,12 +93,12 @@ namespace FundoNote.Controllers
         }
         //Get Notes of a User======================
         [HttpGet]
-        public IActionResult GetUserNotes()
+        public async Task<IActionResult> GetUserNotes()
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var notes = noteBusiness.GetUserNotes(userId);
+                var notes = await noteBusiness.GetUserNotes(userId);
                 if (notes != null)
                 {
                     return Ok(new { sucess = true, message = "Retrive All The Note Of User", data = notes });
@@ -116,10 +117,10 @@ namespace FundoNote.Controllers
         //Api For IsPin==============================
         [HttpPatch]
         [Route("IsPin")]
-        public IActionResult IsPin(long noteId)
+        public async Task<IActionResult> IsPin(long noteId)
         {
             long userId = long.Parse(User.FindFirst("UserId").Value);
-            var note = noteBusiness.IsPin(noteId, userId);
+            var note =await noteBusiness.IsPin(noteId, userId);
             if (note != null)
             {
                 return Ok(new { sucess = true, messsage = "IsPin Change Sucessfully", data = note });
@@ -132,12 +133,12 @@ namespace FundoNote.Controllers
         //IsAchive Api=================
         [HttpPatch]
         [Route("IsAchive")]
-        public IActionResult IsAchive(long noteId)
+        public async Task<IActionResult> IsAchive(long noteId)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var note = noteBusiness.IsAchive(noteId, userId);
+                var note = await noteBusiness.IsAchive(noteId, userId);
                 if (note != null)
                 {
                     return Ok(new { suceess = true, message = "Update IsTrash Sucesssfull", data = note });
@@ -156,12 +157,12 @@ namespace FundoNote.Controllers
         //IsTrash Api================
         [HttpPatch]
         [Route("IsTrash")]
-        public IActionResult IsTrash(long noteId)
+        public async Task<IActionResult> IsTrash(long noteId)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var note = noteBusiness.IsTrash(noteId, userId);
+                var note = await noteBusiness.IsTrash(noteId, userId);
                 if (note != null)
                 {
                     return Ok(new { sucess = true, message = "Update IsTrash Sucessfull", data = note });
@@ -180,12 +181,12 @@ namespace FundoNote.Controllers
         //Color Chnaging
         [HttpPatch]
         [Route("Color")]
-        public IActionResult Color(long noteId, string color)
+        public async Task<IActionResult> Color(long noteId, string color)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var note = noteBusiness.Color(noteId, color, userId);
+                var note = await noteBusiness.Color(noteId, color, userId);
                 if (note != null)
                 {
                     return Ok(new { sucess = true, message = "Update Color Sucessfull", data = note });
@@ -203,12 +204,12 @@ namespace FundoNote.Controllers
         }
         [HttpPost]
         [Route("Image")]
-        public IActionResult UploadImage(long noteid, IFormFile img)
+        public async Task<IActionResult> UploadImage(long noteid, IFormFile img)
         {
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var note = noteBusiness.UploadImage(noteid, img, userId);
+                var note = await noteBusiness.UploadImage(noteid, img, userId);
                 if (note != null)
                 {
                     return Ok(new { sucesss = true, message = "Image Upload Sucessfull", data = note });

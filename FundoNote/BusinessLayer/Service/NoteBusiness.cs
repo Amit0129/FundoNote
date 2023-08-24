@@ -7,6 +7,7 @@ using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.Service
 {
@@ -17,11 +18,11 @@ namespace BusinessLayer.Service
 		{
 			this.noteRepo = noteRepo;
 		}
-		public NotesEntity AddNote(AddNoteModel noteModel, long userId)
-		{
+        public async Task<NotesEntity> AddNote(AddNoteModel noteModel, long userId)
+        {
 			try
 			{
-				return noteRepo.AddNote(noteModel, userId);
+				return await noteRepo.AddNote(noteModel, userId);
 			}
 			catch (Exception)
 			{
@@ -29,11 +30,11 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-		public NotesEntity UpdateNotes(UpdateNoteModel updateNote, long userId)
-		{
+        public async Task<NotesEntity> UpdateNotes(UpdateNoteModel updateNote, long userId)
+        {
 			try
 			{
-				return noteRepo.UpdateNotes(updateNote, userId);
+				return await noteRepo.UpdateNotes(updateNote, userId);
 			}
 			catch (Exception)
 			{
@@ -41,11 +42,11 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-		public bool DeleteNote(DeleteNoteModel deleteNote, long userId)
-		{
+        public async Task<bool> DeleteNote(DeleteNoteModel deleteNote, long userId)
+        {
 			try
 			{
-				return noteRepo.DeleteNote(deleteNote, userId);
+				return await noteRepo.DeleteNote(deleteNote, userId);
 			}
 			catch (Exception)
 			{
@@ -53,11 +54,11 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-		public IEnumerable<NotesEntity> GetUserNotes(long userId)
-		{
+        public async Task<IEnumerable<NotesEntity>> GetUserNotes(long userId)
+        {
 			try
 			{
-				return noteRepo.GetUserNotes(userId);
+				return await noteRepo.GetUserNotes(userId);
 			}
 			catch (Exception)
 			{
@@ -65,24 +66,11 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-		public NotesEntity IsPin(long noteId, long userId)
-		{
+        public async Task<NotesEntity> IsPin(long noteId, long userId)
+        {
 			try
 			{
-				return noteRepo.IsPin(noteId, userId);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
-		}
-
-		public NotesEntity IsAchive(long noteId, long userId)
-		{
-			try
-			{
-				return noteRepo.IsAchive(noteId, userId);
+				return await noteRepo.IsPin(noteId, userId);
 			}
 			catch (Exception)
 			{
@@ -91,11 +79,11 @@ namespace BusinessLayer.Service
 			}
 		}
 
-		public NotesEntity IsTrash(long noteId, long userId)
-		{
+        public async Task<NotesEntity> IsAchive(long noteId, long userId)
+        {
 			try
 			{
-				return noteRepo.IsTrash(noteId, userId);
+				return await noteRepo.IsAchive(noteId, userId);
 			}
 			catch (Exception)
 			{
@@ -103,11 +91,12 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-		public NotesEntity Color(long noteId, string color, long userId)
-		{
+
+        public async Task<NotesEntity> IsTrash(long noteId, long userId)
+        {
 			try
 			{
-				return noteRepo.Color(noteId, color, userId);
+				return await noteRepo.IsTrash(noteId, userId);
 			}
 			catch (Exception)
 			{
@@ -115,11 +104,23 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-		public NotesEntity UploadImage(long noteid, IFormFile img, long userId)
-		{
+        public async Task<NotesEntity> Color(long noteId, string color, long userId)
+        {
 			try
 			{
-				return noteRepo.UploadImage(noteid, img, userId);
+				return await noteRepo.Color(noteId, color, userId);
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+		}
+        public async Task<NotesEntity> UploadImage(long noteid, IFormFile img, long userId)
+        {
+			try
+			{
+				return await noteRepo.UploadImage(noteid, img, userId);
 			}
 			catch (Exception)
 			{

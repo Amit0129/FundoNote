@@ -2,6 +2,7 @@
 using CloudinaryDotNet.Actions;
 using CommonLayer.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RepoLayer.Context;
 using RepoLayer.Entities;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepoLayer.Service
 {
@@ -27,7 +29,7 @@ namespace RepoLayer.Service
             this.context = context;
             Iconfiguration = iconfiguration;
         }
-        public NotesEntity AddNote(AddNoteModel noteModel, long userId)
+        public async Task<NotesEntity> AddNote(AddNoteModel noteModel, long userId)
         {
             try
             {
@@ -44,7 +46,7 @@ namespace RepoLayer.Service
                 notesEntity.Edited = DateTime.Now;
                 notesEntity.UserId = userId;
                 context.Notes.Add(notesEntity);
-                context.SaveChanges();
+                context.SaveChangesAsync();
                 if (notesEntity != null)
                 {
                     return notesEntity;
@@ -60,11 +62,11 @@ namespace RepoLayer.Service
         }
 
         //Update Notes Of a User==============================
-        public NotesEntity UpdateNotes(UpdateNoteModel updateNote, long userId)
+        public async Task<NotesEntity> UpdateNotes(UpdateNoteModel updateNote, long userId)
         {
             try
             {
-                NotesEntity note = context.Notes.FirstOrDefault(x => x.UserId == userId && x.NoteId == updateNote.NoteId);
+                NotesEntity note =await context.Notes.FirstOrDefaultAsync(x => x.UserId == userId && x.NoteId == updateNote.NoteId);
                 if (note != null)
                 {
                     note.Title = updateNote.Title;
@@ -77,7 +79,7 @@ namespace RepoLayer.Service
                     note.IsTrash = updateNote.IsTrash;
                     note.Edited = DateTime.Now;
                     //context.Notes.Update(note);
-                    context.SaveChanges();
+                    context.SaveChangesAsync();
                     return note;
                 }
                 return null;
@@ -89,15 +91,15 @@ namespace RepoLayer.Service
             }
         }
         //Delete Notes Of a user=====================
-        public bool DeleteNote(DeleteNoteModel deleteNote, long userId)
+        public async Task<bool> DeleteNote(DeleteNoteModel deleteNote, long userId)
         {
             try
             {
-                var note = context.Notes.FirstOrDefault(x => x.UserId == userId && x.NoteId == deleteNote.NoteId);
+                var note =await context.Notes.FirstOrDefaultAsync(x => x.UserId == userId && x.NoteId == deleteNote.NoteId);
                 if (note != null)
                 {
                     context.Notes.Remove(note);
-                    context.SaveChanges();
+                    context.SaveChangesAsync();
                     return true;
                 }
                 return false;
@@ -108,11 +110,11 @@ namespace RepoLayer.Service
                 throw;
             }
         }
-        public IEnumerable<NotesEntity> GetUserNotes(long userId)
+        public async Task<IEnumerable<NotesEntity>> GetUserNotes(long userId)
         {
             try
             {
-                return context.Notes.Where(x => x.UserId == userId).ToList();
+                return await context.Notes.Where(x => x.UserId == userId).ToListAsync();
             }
             catch (Exception)
             {
@@ -121,19 +123,19 @@ namespace RepoLayer.Service
             }
         }
         //Ispin==========
-        public NotesEntity IsPin(long noteId, long userId)
+        public async Task<NotesEntity> IsPin(long noteId, long userId)
         {
             try
             {
-                var note = context.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
+                var note = await context.Notes.FirstOrDefaultAsync(x => x.NoteId == noteId && x.UserId == userId);
                 if (note.IsPin == true)
                 {
                     note.IsPin = false;
-                    context.SaveChanges();
+                    context.SaveChangesAsync();
                     return note;
                 }
                 note.IsPin = true;
-                context.SaveChanges();
+                context.SaveChangesAsync();
                 return note;
             }
             catch (Exception)
@@ -143,19 +145,19 @@ namespace RepoLayer.Service
             }
         }
         //IsAchive=====================
-        public NotesEntity IsAchive(long noteId, long userId)
+        public async Task<NotesEntity> IsAchive(long noteId, long userId)
         {
             try
             {
-                var note = context.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
+                var note = await context.Notes.FirstOrDefaultAsync(x => x.NoteId == noteId && x.UserId == userId);
                 if (note.IsAechive == true)
                 {
                     note.IsAechive = false;
-                    context.SaveChanges();
+                    context.SaveChangesAsync();
                     return note;
                 }
                 note.IsAechive = true;
-                context.SaveChanges();
+                context.SaveChangesAsync();
                 return note;
             }
             catch (Exception)
@@ -166,19 +168,19 @@ namespace RepoLayer.Service
 
         }
         //IsTrash===================
-        public NotesEntity IsTrash(long noteId, long userId)
+        public async Task<NotesEntity> IsTrash(long noteId, long userId)
         {
             try
             {
-                var note = context.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
+                var note = await context.Notes.FirstOrDefaultAsync(x => x.NoteId == noteId && x.UserId == userId);
                 if (note.IsTrash == true)
                 {
                     note.IsTrash = false;
-                    context.SaveChanges();
+                    context.SaveChangesAsync();
                     return note;
                 }
                 note.IsTrash = true;
-                context.SaveChanges();
+                context.SaveChangesAsync();
                 return note;
             }
             catch (Exception)
@@ -186,36 +188,34 @@ namespace RepoLayer.Service
 
                 throw;
             }
-
         }
         //Color Change Api===================
-        public NotesEntity Color(long noteId, string color, long userId)
+        public async Task<NotesEntity> Color(long noteId, string color, long userId)
         {
             try
             {
-                var note = context.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
+                var note = await context.Notes.FirstOrDefaultAsync(x => x.NoteId == noteId && x.UserId == userId);
                 if (note != null)
                 {
                     note.Color = color;
-                    context.SaveChanges();
+                    context.SaveChangesAsync();
                     return note;
                 }
                 note.Color = color;
-                context.SaveChanges();
+                context.SaveChangesAsync();
                 return note;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
         //Image Api
-        public NotesEntity UploadImage(long noteid, IFormFile img, long userId)
+        public async Task<NotesEntity> UploadImage(long noteid, IFormFile img, long userId)
         {
             try
             {
-                var note = this.context.Notes.FirstOrDefault(x => x.NoteId == noteid && x.UserId == userId);
+                var note = await context.Notes.FirstOrDefaultAsync(x => x.NoteId == noteid && x.UserId == userId);
                 if (note != null)
                 {
                     Account acc = new Account(CLOUD_NAME, API_KEY, API_SECRET);
@@ -228,15 +228,13 @@ namespace RepoLayer.Service
                     var uploadresult = cloud.Upload(uploadParams).SecureUrl;
                     note.Image = uploadresult.ToString();
                     context.Notes.Update(note);
-                    context.SaveChanges();
+                    context.SaveChangesAsync();
                     return note;
                 }
                 return null;
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
