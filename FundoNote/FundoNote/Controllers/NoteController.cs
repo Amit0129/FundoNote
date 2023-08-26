@@ -3,24 +3,37 @@ using CommonLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using RepoLayer.Context;
 using RepoLayer.Entities;
+using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FundoNote.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class NoteController : ControllerBase
     {
         private readonly INoteBusiness noteBusiness;
-        public NoteController(INoteBusiness noteBusiness)
+        private readonly IMemoryCache memoryCache;
+        private readonly FundoContext fundoContext;
+        private readonly IDistributedCache distributedCache;
+        public NoteController(INoteBusiness noteBusiness, IMemoryCache memoryCache, FundoContext fundoContext, IDistributedCache distributedCache)
         {
             this.noteBusiness = noteBusiness;
+            this.memoryCache = memoryCache;
+            this.fundoContext = fundoContext;
+            this.distributedCache = distributedCache;
         }
         //Add Note Api=========================
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddNote(AddNoteModel noteModel)
         {
@@ -44,6 +57,7 @@ namespace FundoNote.Controllers
             }
         }
         //Update Api======================
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> UpdateNotes(UpdateNoteModel updateNote)
         {
@@ -67,6 +81,7 @@ namespace FundoNote.Controllers
             }
         }
         //Delete  Api=======================
+        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> DeleteNote(DeleteNoteModel deleteNote)
         {
@@ -92,6 +107,7 @@ namespace FundoNote.Controllers
             }
         }
         //Get Notes of a User======================
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetUserNotes()
         {
@@ -115,6 +131,7 @@ namespace FundoNote.Controllers
             }
         }
         //Api For IsPin==============================
+        [Authorize]
         [HttpPatch]
         [Route("IsPin")]
         public async Task<IActionResult> IsPin(long noteId)
@@ -131,6 +148,7 @@ namespace FundoNote.Controllers
             }
         }
         //IsAchive Api=================
+        [Authorize]
         [HttpPatch]
         [Route("IsAchive")]
         public async Task<IActionResult> IsAchive(long noteId)
@@ -155,6 +173,7 @@ namespace FundoNote.Controllers
             }
         }
         //IsTrash Api================
+        [Authorize]
         [HttpPatch]
         [Route("IsTrash")]
         public async Task<IActionResult> IsTrash(long noteId)
@@ -179,6 +198,7 @@ namespace FundoNote.Controllers
             }
         }
         //Color Chnaging
+        [Authorize]
         [HttpPatch]
         [Route("Color")]
         public async Task<IActionResult> Color(long noteId, string color)
@@ -202,6 +222,8 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
+        //Image Changing Using Cloudinary Api
+        [Authorize]
         [HttpPost]
         [Route("Image")]
         public async Task<IActionResult> UploadImage(long noteid, IFormFile img)
@@ -218,6 +240,39 @@ namespace FundoNote.Controllers
                 {
                     return BadRequest(new { sucess = false, message = "Upload Faild" });
                 }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        //Get All Data Using Radis
+        [HttpGet("redisGetAllNotes")]
+        public async Task<IActionResult> GetAllNotesUsingRedisCache()
+        {
+            try
+            {
+                var key = "noteList";
+                string serializedNoteList;
+                var noteList = new List<NotesEntity>();
+                var radisNoteList = await distributedCache.GetAsync(key);
+                if (radisNoteList != null)
+                {
+                    serializedNoteList = Encoding.UTF8.GetString(radisNoteList);
+                    noteList = JsonConvert.DeserializeObject<List<NotesEntity>>(serializedNoteList);
+                }
+                else
+                {
+                    noteList =await fundoContext.Notes.ToListAsync();
+                    serializedNoteList = JsonConvert.SerializeObject(noteList);
+                    radisNoteList = Encoding.UTF8.GetBytes(serializedNoteList);
+                    var options = new DistributedCacheEntryOptions()
+                        .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
+                        .SetSlidingExpiration(TimeSpan.FromMinutes(2));
+                    await distributedCache.SetAsync(key,radisNoteList,options);
+                }
+                return Ok(new { sucesss = true, message = "Image Upload Sucessfull", data = noteList });
             }
             catch (System.Exception)
             {

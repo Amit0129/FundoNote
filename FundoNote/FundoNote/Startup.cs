@@ -35,6 +35,7 @@ namespace FundoNote
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddDbContext<FundoContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:FundoDB"]));
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUserRepo, UserRepo>();
@@ -44,6 +45,7 @@ namespace FundoNote
             services.AddTransient<ICollaboratorBusiness, CollaboratorBusiness>();
             services.AddTransient<ILabelRepo, LabelRepo>();
             services.AddTransient<ILabelBusiness, LabelBusiness>();
+            //Jwt Token Service
             services.AddAuthentication(au =>
             {
                 au.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -60,8 +62,8 @@ namespace FundoNote
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
-            services.AddControllers();
-
+            
+            //Swagger Authetication Service
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FundoNote", Version = "v1" });
@@ -89,6 +91,12 @@ namespace FundoNote
                             new string[]{}
                     }
                 });
+            });
+            //Radis Service
+            services.AddMemoryCache();
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost:6379";
             });
         }
 
