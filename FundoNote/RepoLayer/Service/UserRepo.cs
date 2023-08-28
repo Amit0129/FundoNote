@@ -146,26 +146,5 @@ namespace RepoLayer.Service
                 throw;
             }
         }
-        //Get All User Data========================
-        public async Task<List<UserEntity>> GetAllUserData()
-        {
-            try
-            {
-                var userData = await fundoContext.Users.ToListAsync();
-                if (userData != null)
-                {
-                    return userData;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
     }
 }

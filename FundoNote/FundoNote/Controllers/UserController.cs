@@ -111,28 +111,5 @@ namespace FundoNote.Controllers
                 throw;
             }
         }
-        [HttpGet]
-        [Route("Users")]
-        public async Task<IActionResult> GetAllUserData()
-        {
-            try
-            {
-                var userData = await userBusiness.GetAllUserData();
-                if (userData != null)
-                {
-                    return Ok(new { sucess = true, message = "Data Retrive SucessFully", data = userData });
-                }
-                else
-                {
-                    return BadRequest(new { sucess = false, message = "Data Retrive Unsucesssfull" });
-                }
-            }
-            catch (System.Exception)
-            {
-
-                throw;
-            }
-        }
-
     }
 }

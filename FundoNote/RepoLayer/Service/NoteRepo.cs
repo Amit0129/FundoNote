@@ -238,5 +238,24 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+        //Search Queary API-----
+        public async Task<IEnumerable<NotesEntity>> SearchQuery(long userId,string serchvalue)
+        {
+            try
+            {
+                var value =await context.Notes.Where(x => x.UserId == userId && (x.Title.Contains(serchvalue) || x.Note.Contains(serchvalue))).ToListAsync();
+
+                if (value == null)
+                {
+                    return null;
+                }
+                return value;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

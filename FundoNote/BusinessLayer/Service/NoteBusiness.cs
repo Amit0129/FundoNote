@@ -128,5 +128,18 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
-	}
+        public async Task<IEnumerable<NotesEntity>> SearchQuery(long userId, string serchvalue)
+		{
+			try
+			{
+				return await noteRepo.SearchQuery(userId, serchvalue);
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+		}
+
+    }
 }

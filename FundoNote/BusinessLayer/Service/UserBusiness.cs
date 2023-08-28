@@ -78,17 +78,5 @@ namespace BusinessLayer.Service
                 throw;
             }
         }
-        public async Task<List<UserEntity>> GetAllUserData()
-        {
-            try
-            {
-                return await userRepo.GetAllUserData();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
     }
 }

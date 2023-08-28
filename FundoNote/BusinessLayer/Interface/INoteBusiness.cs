@@ -19,5 +19,6 @@ namespace BusinessLayer.Interface
         public Task<NotesEntity> IsTrash(long noteId, long userId);
         public Task<NotesEntity> Color(long noteId, string color, long userId);
         public Task<NotesEntity> UploadImage(long noteid, IFormFile img, long userId);
+        public Task<IEnumerable<NotesEntity>> SearchQuery(long userId, string serchvalue);
     }
 }

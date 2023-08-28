@@ -248,6 +248,7 @@ namespace FundoNote.Controllers
             }
         }
         //Get All Data Using Radis
+        [Authorize]
         [HttpGet("redisGetAllNotes")]
         public async Task<IActionResult> GetAllNotesUsingRedisCache()
         {
@@ -264,7 +265,8 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    noteList =await fundoContext.Notes.ToListAsync();
+                    long userId = long.Parse(User.FindFirst("UserId").Value);
+                    noteList = (List<NotesEntity>)await noteBusiness.GetUserNotes(userId);
                     serializedNoteList = JsonConvert.SerializeObject(noteList);
                     radisNoteList = Encoding.UTF8.GetBytes(serializedNoteList);
                     var options = new DistributedCacheEntryOptions()
@@ -275,6 +277,32 @@ namespace FundoNote.Controllers
                 return Ok(new { sucesss = true, message = "Image Upload Sucessfull", data = noteList });
             }
             catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+        //Search Query Api
+        [Authorize]
+        [HttpGet]
+        [Route("Search/{serchvalue}")]
+        public async Task<IActionResult> SearchQuery(string serchvalue)
+        {
+            try
+            {
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var notes =await noteBusiness.SearchQuery(userId, serchvalue);
+                if (notes != null)
+                {
+                    return Ok(new {sucess = true, message = "Notes Retrive Sucessfull",data = notes});
+                }
+                else
+                {
+                    return BadRequest(new {sucess = false, message = "Retrive Faild"});
+                }
+
+            }
+            catch (Exception)
             {
 
                 throw;
