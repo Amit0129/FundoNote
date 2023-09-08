@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepoLayer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -33,13 +34,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Added Unsucessful" });
+                    return BadRequest(new { sucess = false, message = "Added Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         [HttpPatch]
@@ -56,10 +56,9 @@ namespace FundoNote.Controllers
                 }
                 return BadRequest(new { sucess = false, message = "Update Failed" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         [HttpDelete]
@@ -76,13 +75,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Delete Faild" });
+                    return BadRequest(new { sucess = false, message = "Delete Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         [HttpGet]
@@ -98,13 +96,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Retrive Faild" });
+                    return BadRequest(new { sucess = false, message = "Retrive Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         [HttpGet]
@@ -121,13 +118,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Retrive Faild" });
+                    return BadRequest(new { sucess = false, message = "Retrive Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

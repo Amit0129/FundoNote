@@ -54,10 +54,9 @@ namespace RepoLayer.Service
                 return null;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
@@ -66,7 +65,7 @@ namespace RepoLayer.Service
         {
             try
             {
-                NotesEntity note =await context.Notes.FirstOrDefaultAsync(x => x.UserId == userId && x.NoteId == updateNote.NoteId);
+                NotesEntity note = await context.Notes.FirstOrDefaultAsync(x => x.UserId == userId && x.NoteId == updateNote.NoteId);
                 if (note != null)
                 {
                     note.Title = updateNote.Title;
@@ -78,16 +77,14 @@ namespace RepoLayer.Service
                     note.IsPin = updateNote.IsPin;
                     note.IsTrash = updateNote.IsTrash;
                     note.Edited = DateTime.Now;
-                    //context.Notes.Update(note);
                     await context.SaveChangesAsync();
                     return note;
                 }
                 return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Delete Notes Of a user=====================
@@ -95,7 +92,7 @@ namespace RepoLayer.Service
         {
             try
             {
-                var note =await context.Notes.FirstOrDefaultAsync(x => x.UserId == userId && x.NoteId == deleteNote.NoteId);
+                var note = await context.Notes.FirstOrDefaultAsync(x => x.UserId == userId && x.NoteId == deleteNote.NoteId);
                 if (note != null)
                 {
                     context.Notes.Remove(note);
@@ -104,10 +101,9 @@ namespace RepoLayer.Service
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<IEnumerable<NotesEntity>> GetUserNotes(long userId)
@@ -116,10 +112,9 @@ namespace RepoLayer.Service
             {
                 return await context.Notes.Where(x => x.UserId == userId).ToListAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Ispin==========
@@ -138,10 +133,9 @@ namespace RepoLayer.Service
                 await context.SaveChangesAsync();
                 return note;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //IsAchive=====================
@@ -160,10 +154,9 @@ namespace RepoLayer.Service
                 await context.SaveChangesAsync();
                 return note;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
 
         }
@@ -183,10 +176,9 @@ namespace RepoLayer.Service
                 await context.SaveChangesAsync();
                 return note;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Color Change Api===================
@@ -205,9 +197,9 @@ namespace RepoLayer.Service
                 await context.SaveChangesAsync();
                 return note;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Image Api
@@ -233,17 +225,36 @@ namespace RepoLayer.Service
                 }
                 return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
-        //Search Queary API-----
-        public async Task<IEnumerable<NotesEntity>> SearchQuery(long userId,string serchvalue)
+        public async Task<NotesEntity> SetReminder(long userId, long noteId, DateTime remin)
         {
             try
             {
-                var value =await context.Notes.Where(x => x.UserId == userId && (x.Title.Contains(serchvalue) || x.Note.Contains(serchvalue))).ToListAsync();
+                var notes = context.Notes.FirstOrDefault(x => x.UserId == userId && x.NoteId == noteId);
+                if (notes == null)
+                {
+                    return null;
+                }
+                notes.RemindMe = remin;
+                context.SaveChanges();
+                return notes;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+        //Search Queary API-----
+        public async Task<IEnumerable<NotesEntity>> SearchQuery(long userId, string serchvalue)
+        {
+            try
+            {
+                var value = await context.Notes.Where(x => x.UserId == userId && (x.Title.Contains(serchvalue) || x.Note.Contains(serchvalue))).ToListAsync();
 
                 if (value == null)
                 {
@@ -251,10 +262,9 @@ namespace RepoLayer.Service
                 }
                 return value;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

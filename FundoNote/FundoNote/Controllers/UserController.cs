@@ -34,13 +34,13 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "User Registration Unsucesssfull" });
+                    return BadRequest(new { sucess = false, message = "User Registration Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
 
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         [HttpPost("Login")]
@@ -55,13 +55,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "User Login Unsucesssfull" });
+                    return BadRequest(new { sucess = false, message = "User Login Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         [HttpPost]
@@ -77,13 +76,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "User Forget Password Unsucesssfull" });
+                    return BadRequest(new { sucess = false, message = "User Forget Password Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         [Authorize]
@@ -101,14 +99,13 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return Ok(new { sucess = false, message = "Reset Password Unsucesssfull" });
+                    return BadRequest(new { sucess = false, message = "Reset Password Failed" });
                 }
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

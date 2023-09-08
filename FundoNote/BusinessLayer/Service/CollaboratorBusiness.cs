@@ -22,30 +22,20 @@ namespace BusinessLayer.Service
             {
                 return await collaboratorRepo.AddCollab(collabModel, userId, noteId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<bool> DeleteAColab(int colabId, long userID, long noteId)
         {
             try
             {
-                try
-                {
-                    return await collaboratorRepo.DeleteAColab(colabId, userID, noteId);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
+                return await collaboratorRepo.DeleteAColab(colabId, userID, noteId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<IEnumerable<CollaboratorEntity>> GetAllCollab(long userID, long noteId)
@@ -54,10 +44,9 @@ namespace BusinessLayer.Service
             {
                 return await collaboratorRepo.GetAllCollab(userID, noteId);
             }
-            catch (Exception)
-            {
-
-                throw;
+            catch (Exception ex)  
+            { 
+                throw new Exception(ex.Message); 
             }
         }
     }

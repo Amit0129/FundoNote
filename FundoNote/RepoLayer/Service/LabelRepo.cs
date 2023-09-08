@@ -31,10 +31,9 @@ namespace RepoLayer.Service
                 await context.SaveChangesAsync();
                 return label;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Update label
@@ -51,10 +50,9 @@ namespace RepoLayer.Service
                 }
                 return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Delete Label
@@ -71,10 +69,9 @@ namespace RepoLayer.Service
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Get All Label For User
@@ -84,10 +81,9 @@ namespace RepoLayer.Service
             {
                 return await context.Labels.Where(x => x.UserId == userId).ToListAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Get All Label For A node
@@ -97,10 +93,9 @@ namespace RepoLayer.Service
             {
                 return await context.Labels.Where(x => x.UserId == userId && x.NoteId == noteId).ToListAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

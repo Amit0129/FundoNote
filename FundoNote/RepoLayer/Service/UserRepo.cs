@@ -30,11 +30,13 @@ namespace RepoLayer.Service
         {
             try
             {
-                UserEntity userEntity = new UserEntity();
-                userEntity.FirstName = model.FirstName;
-                userEntity.LastName = model.LastName;
-                userEntity.Email = model.Email;
-                userEntity.Password = EncryptAndDrcrypy.ConvertToEncrypt(model.Password);
+                UserEntity userEntity = new UserEntity
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Password = EncryptAndDrcrypy.ConvertToEncrypt(model.Password)
+                };
 
                 await fundoContext.Users.AddAsync(userEntity);
                 await fundoContext.SaveChangesAsync();
@@ -47,10 +49,9 @@ namespace RepoLayer.Service
                     return null;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //User Log in=========================
@@ -74,10 +75,9 @@ namespace RepoLayer.Service
                     };
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Generate JWT Token=============================================
@@ -108,7 +108,7 @@ namespace RepoLayer.Service
                 var id = user.UserID;
                 if (user != null)
                 {
-                    var token =await JWTTokenGenerator(id, userEmail);
+                    var token = await JWTTokenGenerator(id, userEmail);
                     MSMQ msmq = new MSMQ();
                     msmq.sendData2Queue(token);
                     return token;
@@ -118,10 +118,9 @@ namespace RepoLayer.Service
                     return null;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //ResetPassword ===================
@@ -134,16 +133,14 @@ namespace RepoLayer.Service
                 if (user != null && resetPassword.NewPassword == resetPassword.ConfirmPassword)
                 {
                     user.Password = EncryptAndDrcrypy.ConvertToEncrypt(resetPassword.NewPassword);
-                    //fundoContext.Users.Update(user);
                     await fundoContext.SaveChangesAsync();
                     return true;
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

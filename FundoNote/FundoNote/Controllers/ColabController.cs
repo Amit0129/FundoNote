@@ -1,9 +1,11 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Models;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepoLayer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,23 +17,39 @@ namespace FundoNote.Controllers
     public class ColabController : ControllerBase
     {
         private readonly ICollaboratorBusiness collaboratorBusiness;
-        public ColabController(ICollaboratorBusiness collaboratorBusiness)
+        private readonly IBus _bus;
+        public ColabController(ICollaboratorBusiness collaboratorBusiness, IBus bus)
         {
             this.collaboratorBusiness = collaboratorBusiness;
+            this._bus = bus;
         }
         [HttpPost]
         [Route("Colab/{noteId}")]
         public async Task<IActionResult> AddCollab(AddCollabModel collabModel, long noteId)
         {
-            long userId = long.Parse(User.FindFirst("UserId").Value);
-            var colab = await collaboratorBusiness.AddCollab(collabModel, userId, noteId);
-            if (colab != null)
+            try
             {
-                return Ok(new { sucess = true, message = "Colab Email Sucessfull", data = colab });
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var colab = await collaboratorBusiness.AddCollab(collabModel, userId, noteId);
+                if (colab != null)
+                {
+                    //Rabbit Mq Publisher
+
+                    //Uri uri = new Uri("rabbitmq://localhost/colabQueue");
+                    //var endPoint = await _bus.GetSendEndpoint(uri);
+                    //await endPoint.Send(collabModel);
+                    SendColabAlartToColabEmail sendMessage = new SendColabAlartToColabEmail();
+                    sendMessage.EmailService(colab.CollabEmail);
+                    return Ok(new { sucess = true, message = "Colab Email Sucessfull", data = colab });
+                }
+                else
+                {
+                    return BadRequest(new { susess = false, message = "Colab Email Failed" });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest(new { susess = false, message = "Colab Email Unsucessfull" });
+                throw new Exception(ex.Message);
             }
         }
         [HttpDelete]
@@ -48,13 +66,13 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { susess = false, message = "Colab Deleted Unsucessfull" });
+                    return BadRequest(new { susess = false, message = "Colab Delete Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         [HttpGet]
@@ -71,13 +89,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Retrive Colab Unsucessfull" });
+                    return BadRequest(new { sucess = false, message = "Retrive Colab Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

@@ -47,13 +47,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Note Added Unsucessfully" });
+                    return BadRequest(new { sucess = false, message = "Note Added Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Update Api======================
@@ -64,20 +63,19 @@ namespace FundoNote.Controllers
             try
             {
                 var userID = long.Parse(User.FindFirst("UserId").Value);
-                var update =await noteBusiness.UpdateNotes(updateNote, userID);
+                var update = await noteBusiness.UpdateNotes(updateNote, userID);
                 if (update != null)
                 {
                     return Ok(new { sucess = true, message = "Note Updated Sucessfully", data = update });
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Note Updated Unsucessfully" });
+                    return BadRequest(new { sucess = false, message = "Note Update Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Delete  Api=======================
@@ -92,18 +90,15 @@ namespace FundoNote.Controllers
                 if (note)
                 {
                     return Ok(new { sucess = true, message = "Note Deleted Sucessfully" });
-
-
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Note Deleted Unsucessfully" });
+                    return BadRequest(new { sucess = false, message = "Note Delete Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Get Notes of a User======================
@@ -121,36 +116,42 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Retrive All The Note Of User" });
+                    return BadRequest(new { sucess = false, message = "Retrive All The Note Of User Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Api For IsPin==============================
         [Authorize]
         [HttpPatch]
-        [Route("IsPin")]
+        [Route("IsPin/{noteId}")]
         public async Task<IActionResult> IsPin(long noteId)
         {
-            long userId = long.Parse(User.FindFirst("UserId").Value);
-            var note =await noteBusiness.IsPin(noteId, userId);
-            if (note != null)
+            try
             {
-                return Ok(new { sucess = true, messsage = "IsPin Change Sucessfully", data = note });
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var note = await noteBusiness.IsPin(noteId, userId);
+                if (note != null)
+                {
+                    return Ok(new { sucess = true, messsage = "IsPin Change Sucessfully", data = note });
+                }
+                else
+                {
+                    return BadRequest(new { sucess = false, message = "IsPin Change Failed" });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest(new { sucess = false, message = "IsPin Change Unsucessful" });
+                throw new Exception(ex.Message);
             }
         }
         //IsAchive Api=================
         [Authorize]
         [HttpPatch]
-        [Route("IsAchive")]
+        [Route("IsAchive/{noteId}")]
         public async Task<IActionResult> IsAchive(long noteId)
         {
             try
@@ -159,23 +160,22 @@ namespace FundoNote.Controllers
                 var note = await noteBusiness.IsAchive(noteId, userId);
                 if (note != null)
                 {
-                    return Ok(new { suceess = true, message = "Update IsTrash Sucesssfull", data = note });
+                    return Ok(new { suceess = true, message = "Update IsAchive Sucesssfull", data = note });
                 }
                 else
                 {
-                    return BadRequest(new { susses = false, message = "Update Unsucessfull" });
+                    return BadRequest(new { susses = false, message = "IsAchive Update Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //IsTrash Api================
         [Authorize]
         [HttpPatch]
-        [Route("IsTrash")]
+        [Route("IsTrash/{noteId}")]
         public async Task<IActionResult> IsTrash(long noteId)
         {
             try
@@ -188,19 +188,18 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucesss = false, message = "Update Unsucesfull" });
+                    return BadRequest(new { sucesss = false, message = "Update IsTrash Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Color Chnaging
         [Authorize]
         [HttpPatch]
-        [Route("Color")]
+        [Route("Color/{noteId}/{color}")]
         public async Task<IActionResult> Color(long noteId, string color)
         {
             try
@@ -213,13 +212,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Update Unsucessfull" });
+                    return BadRequest(new { sucess = false, message = "Update Color Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Image Changing Using Cloudinary Api
@@ -238,13 +236,12 @@ namespace FundoNote.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { sucess = false, message = "Upload Faild" });
+                    return BadRequest(new { sucess = false, message = "Upload Failed" });
                 }
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Get All Data Using Radis
@@ -272,14 +269,37 @@ namespace FundoNote.Controllers
                     var options = new DistributedCacheEntryOptions()
                         .SetAbsoluteExpiration(DateTime.Now.AddMinutes(10))
                         .SetSlidingExpiration(TimeSpan.FromMinutes(2));
-                    await distributedCache.SetAsync(key,radisNoteList,options);
+                    await distributedCache.SetAsync(key, radisNoteList, options);
                 }
-                return Ok(new { sucesss = true, message = "Image Upload Sucessfull", data = noteList });
+                return Ok(new { sucesss = true, message = "Retrive Note Sucessfull", data = noteList });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
+            }
+        }
+        //Reminder ApI
+        [Authorize]
+        [HttpPatch]
+        [Route("Reminder/{noteId}/{remin}")]
+        public async Task<IActionResult> SetReminder(long noteId, DateTime remin)
+        {
+            try
+            {
+                long userId = long.Parse(User.FindFirst("UserId").Value);
+                var notes = noteBusiness.SetReminder(userId, noteId, remin);
+                if (notes != null)
+                {
+                    return Ok(new { sucess = true, mssage = "Reminder Set Sucessfull", data = notes });
+                }
+                else
+                {
+                    return BadRequest(new { sucess = false, message = "Reminder Set Failed" });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
         //Search Query Api
@@ -291,21 +311,20 @@ namespace FundoNote.Controllers
             try
             {
                 long userId = long.Parse(User.FindFirst("UserId").Value);
-                var notes =await noteBusiness.SearchQuery(userId, serchvalue);
+                var notes = await noteBusiness.SearchQuery(userId, serchvalue);
                 if (notes != null)
                 {
-                    return Ok(new {sucess = true, message = "Notes Retrive Sucessfull",data = notes});
+                    return Ok(new { sucess = true, message = "Notes Retrive Sucessfull", data = notes });
                 }
                 else
                 {
-                    return BadRequest(new {sucess = false, message = "Retrive Faild"});
+                    return BadRequest(new { sucess = false, message = "Retrive Failed" });
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

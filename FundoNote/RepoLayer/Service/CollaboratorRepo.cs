@@ -5,6 +5,7 @@ using RepoLayer.Entities;
 using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,10 +32,9 @@ namespace RepoLayer.Service
                 await context.SaveChangesAsync();
                 return collaboratorEntity;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Delete Collab
@@ -42,7 +42,7 @@ namespace RepoLayer.Service
         {
             try
             {
-                var colab =await context.Collaborators.FirstOrDefaultAsync(x => x.collaboratorId == colabId && x.UserId == userID && x.NoteId == noteId);
+                var colab = await context.Collaborators.FirstOrDefaultAsync(x => x.collaboratorId == colabId && x.UserId == userID && x.NoteId == noteId);
                 if (colab != null)
                 {
                     context.Remove(colab);
@@ -51,10 +51,9 @@ namespace RepoLayer.Service
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         //Get All Colab Email 
@@ -64,13 +63,10 @@ namespace RepoLayer.Service
             {
                 return await context.Collaborators.Where(x => x.UserId == userID && x.NoteId == noteId).ToListAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
-
-
         }
     }
 }

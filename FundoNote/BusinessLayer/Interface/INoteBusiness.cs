@@ -20,5 +20,6 @@ namespace BusinessLayer.Interface
         public Task<NotesEntity> Color(long noteId, string color, long userId);
         public Task<NotesEntity> UploadImage(long noteid, IFormFile img, long userId);
         public Task<IEnumerable<NotesEntity>> SearchQuery(long userId, string serchvalue);
+        public Task<NotesEntity> SetReminder(long userId, long noteId, DateTime remin);
     }
 }

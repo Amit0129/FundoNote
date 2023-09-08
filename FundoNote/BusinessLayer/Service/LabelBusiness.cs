@@ -22,10 +22,9 @@ namespace BusinessLayer.Service
             {
                 return await labelRepo.AddLabel(addLabel, userId, noteId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<LabelEntity> UpdateLabel(long userId, long labelId, string labelName)
@@ -34,10 +33,9 @@ namespace BusinessLayer.Service
             {
                 return await labelRepo.UpdateLabel(userId, labelId, labelName);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<bool> DeleteLabel(long userId, long labelId)
@@ -46,10 +44,9 @@ namespace BusinessLayer.Service
             {
                 return await labelRepo.DeleteLabel(userId, labelId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<IEnumerable<LabelEntity>> GetLabels(long userId)
@@ -58,10 +55,9 @@ namespace BusinessLayer.Service
             {
                 return await labelRepo.GetLabels(userId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<IEnumerable<LabelEntity>> GetLabelsByNote(long userId, long noteId)
@@ -70,10 +66,9 @@ namespace BusinessLayer.Service
             {
                 return await labelRepo.GetLabelsByNote(userId, noteId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }

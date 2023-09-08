@@ -45,10 +45,10 @@ namespace CommonLayer.Models
                 }
                 fundoQ.BeginReceive();
             }
-            catch (MessageQueueException)
+            catch (MessageQueueException ex)
             {
 
-                throw;
+                throw ex;
             }
         }
     }

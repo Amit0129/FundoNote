@@ -23,12 +23,10 @@ namespace BusinessLayer.Service
             {
                 return await userRepo.UserRegister(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
-            //throw new NotImplementedException();
         }
         public async Task<UserLogInResult> UserLogin(UserLoginModel loginModel)
         {
@@ -36,10 +34,9 @@ namespace BusinessLayer.Service
             {
                 return await userRepo.UserLogin(loginModel);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<string> JWTTokenGenerator(long userid, string email)
@@ -48,10 +45,9 @@ namespace BusinessLayer.Service
             {
                 return await userRepo.JWTTokenGenerator(userid, email);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<string> ForgetPassword(ForgetPasswordModel forgetPassword)
@@ -60,10 +56,9 @@ namespace BusinessLayer.Service
             {
                 return await userRepo.ForgetPassword(forgetPassword);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<bool> ResetPassword(ResetPasswordModel resetPassword, string email)
@@ -72,10 +67,9 @@ namespace BusinessLayer.Service
             {
                 return await userRepo.ResetPassword(resetPassword, email);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }
     }
