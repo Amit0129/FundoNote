@@ -32,7 +32,11 @@ namespace FundoNote.Controllers
             this.fundoContext = fundoContext;
             this.distributedCache = distributedCache;
         }
-        //Add Note Api=========================
+        /// <summary>
+        /// Add a new Note
+        /// </summary>
+        /// <param name="noteModel">New note Info</param>
+        /// <returns>Registerd Note info</returns>
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddNote(AddNoteModel noteModel)
@@ -55,7 +59,11 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //Update Api======================
+        /// <summary>
+        /// Update note
+        /// </summary>
+        /// <param name="updateNote">update info of note</param>
+        /// <returns>Updated note</returns>
         [Authorize]
         [HttpPut]
         public async Task<IActionResult> UpdateNotes(UpdateNoteModel updateNote)
@@ -78,7 +86,11 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //Delete  Api=======================
+        /// <summary>
+        /// Remove a Note
+        /// </summary>
+        /// <param name="deleteNote">Note info</param>
+        /// <returns>Boolean value</returns>
         [Authorize]
         [HttpDelete]
         public async Task<IActionResult> DeleteNote(DeleteNoteModel deleteNote)
@@ -101,7 +113,10 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //Get Notes of a User======================
+        /// <summary>
+        /// Get notes of a perticular user
+        /// </summary>
+        /// <returns>All notes info of a user</returns>
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetUserNotes()
@@ -124,7 +139,6 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //Api For IsPin==============================
         [Authorize]
         [HttpPatch]
         [Route("IsPin/{noteId}")]
@@ -148,7 +162,6 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //IsAchive Api=================
         [Authorize]
         [HttpPatch]
         [Route("IsAchive/{noteId}")]
@@ -172,7 +185,6 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //IsTrash Api================
         [Authorize]
         [HttpPatch]
         [Route("IsTrash/{noteId}")]
@@ -196,7 +208,6 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //Color Chnaging
         [Authorize]
         [HttpPatch]
         [Route("Color/{noteId}/{color}")]
@@ -220,7 +231,6 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //Image Changing Using Cloudinary Api
         [Authorize]
         [HttpPost]
         [Route("Image")]
@@ -244,7 +254,11 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //Get All Data Using Radis
+        /// <summary>
+        /// Get note using Radis cache
+        /// </summary>
+        /// <returns>All note of user</returns>
+        /// <exception cref="Exception"></exception>
         [Authorize]
         [HttpGet("redisGetAllNotes")]
         public async Task<IActionResult> GetAllNotesUsingRedisCache()
@@ -278,7 +292,6 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //Reminder ApI
         [Authorize]
         [HttpPatch]
         [Route("Reminder/{noteId}/{remin}")]
@@ -302,7 +315,6 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        //Search Query Api
         [Authorize]
         [HttpGet]
         [Route("Search/{serchvalue}")]

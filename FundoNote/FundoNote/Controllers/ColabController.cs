@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace FundoNote.Controllers
 {
+    /// <summary>
+    /// Collab Controller
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -23,6 +26,12 @@ namespace FundoNote.Controllers
             this.collaboratorBusiness = collaboratorBusiness;
             this._bus = bus;
         }
+        /// <summary>
+        /// Add collab 
+        /// </summary>
+        /// <param name="collabModel">New colab Info</param>
+        /// <param name="noteId">Note Id</param>
+        /// <returns>Collab info</returns>
         [HttpPost]
         [Route("Colab/{noteId}")]
         public async Task<IActionResult> AddCollab(AddCollabModel collabModel, long noteId)
@@ -52,6 +61,13 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Delete Colab
+        /// </summary>
+        /// <param name="colabId">Collab Id</param>
+        /// <param name="noteId">Note Id</param>
+        /// <returns>Boolean Value</returns>
+        /// <exception cref="Exception"></exception>
         [HttpDelete]
         [Route("Delete/{colabId}/{noteId}")]
         public async Task<IActionResult> DeleteAColab(int colabId, long noteId)
@@ -62,7 +78,7 @@ namespace FundoNote.Controllers
                 var colab = await collaboratorBusiness.DeleteAColab(colabId, userId, noteId);
                 if (colab)
                 {
-                    return Ok(new { sucess = true, message = "Colab Deleted Sucessfull", data = colab });
+                    return Ok(new { sucess = true, message = "Colab Deleted Sucessfull"});
                 }
                 else
                 {
@@ -75,6 +91,12 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Get all colab  of a note
+        /// </summary>
+        /// <param name="noteId">Note Id</param>
+        /// <returns>Gel all collab info of a note</returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet]
         [Route("GetColab")]
         public async Task<IActionResult> GetAllCollab(long noteId)

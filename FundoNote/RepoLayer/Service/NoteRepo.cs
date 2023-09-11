@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace RepoLayer.Service
 {
+    /// <summary>
+    /// Note Repo Layer
+    /// </summary>
     public class NoteRepo : INoteRepo
     {
         private readonly FundoContext context;
@@ -29,6 +32,12 @@ namespace RepoLayer.Service
             this.context = context;
             Iconfiguration = iconfiguration;
         }
+        /// <summary>
+        /// Add Note
+        /// </summary>
+        /// <param name="noteModel">New note innfo</param>
+        /// <param name="userId">User Id</param>
+        /// <returns>Note info</returns>
         public async Task<NotesEntity> AddNote(AddNoteModel noteModel, long userId)
         {
             try
@@ -60,7 +69,12 @@ namespace RepoLayer.Service
             }
         }
 
-        //Update Notes Of a User==============================
+        /// <summary>
+        /// Update Note
+        /// </summary>
+        /// <param name="updateNote">update note info</param>
+        /// <param name="userId">User Id</param>
+        /// <returns>Updated Note</returns>
         public async Task<NotesEntity> UpdateNotes(UpdateNoteModel updateNote, long userId)
         {
             try
@@ -87,7 +101,12 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Delete Notes Of a user=====================
+        /// <summary>
+        /// Delete a note
+        /// </summary>
+        /// <param name="deleteNote">note details</param>
+        /// <param name="userId">User Id</param>
+        /// <returns>boolean value</returns>
         public async Task<bool> DeleteNote(DeleteNoteModel deleteNote, long userId)
         {
             try
@@ -106,6 +125,11 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Get all Use note
+        /// </summary>
+        /// <param name="userId">User Id</param>
+        /// <returns>All notes of tthe user</returns>
         public async Task<IEnumerable<NotesEntity>> GetUserNotes(long userId)
         {
             try
@@ -117,7 +141,12 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Ispin==========
+        /// <summary>
+        /// Change is Pin
+        /// </summary>
+        /// <param name="noteId">Note Id</param>
+        /// <param name="userId">User Id</param>
+        /// <returns>note info</returns>
         public async Task<NotesEntity> IsPin(long noteId, long userId)
         {
             try
@@ -138,7 +167,12 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //IsAchive=====================
+        /// <summary>
+        /// Change isAchive
+        /// </summary>
+        /// <param name="noteId">Note Id</param>
+        /// <param name="userId">User Id</param>
+        /// <returns>note info</returns>
         public async Task<NotesEntity> IsAchive(long noteId, long userId)
         {
             try
@@ -160,7 +194,12 @@ namespace RepoLayer.Service
             }
 
         }
-        //IsTrash===================
+        /// <summary>
+        /// Change isTrash
+        /// </summary>
+        /// <param name="noteId">Note Id</param>
+        /// <param name="userId">User Id</param>
+        /// <returns>note info</returns>
         public async Task<NotesEntity> IsTrash(long noteId, long userId)
         {
             try
@@ -181,7 +220,12 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Color Change Api===================
+        /// <summary>
+        /// Change Color
+        /// </summary>
+        /// <param name="noteId">Note Id</param>
+        /// <param name="userId">User Id</param>
+        /// <returns>note info</returns>
         public async Task<NotesEntity> Color(long noteId, string color, long userId)
         {
             try
@@ -202,7 +246,12 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Image Api
+        /// <summary>
+        /// Uplode Image
+        /// </summary>
+        /// <param name="noteId">Note Id</param>
+        /// <param name="userId">User Id</param>
+        /// <returns>note info</returns>
         public async Task<NotesEntity> UploadImage(long noteid, IFormFile img, long userId)
         {
             try
@@ -230,6 +279,13 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Set Reminder
+        /// </summary>
+        /// <param name="userId">User Id</param>
+        /// <param name="noteId">Note Id</param>
+        /// <param name="remin">Reminder time</param>
+        /// <returns>note info</returns>
         public async Task<NotesEntity> SetReminder(long userId, long noteId, DateTime remin)
         {
             try
@@ -249,7 +305,13 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Search Queary API-----
+        /// <summary>
+        /// Search Query
+        /// </summary>
+        /// <param name="userId">User Id</param>
+        /// <param name="serchvalue">Search Value</param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<IEnumerable<NotesEntity>> SearchQuery(long userId, string serchvalue)
         {
             try

@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace RepoLayer.Service
 {
+    /// <summary>
+    /// Label repo layer
+    /// </summary>
     public class LabelRepo : ILabelRepo
     {
         private readonly FundoContext context;
@@ -18,7 +21,13 @@ namespace RepoLayer.Service
         {
             this.context = context;
         }
-        //Add Label API
+        /// <summary>
+        /// Add Lebel
+        /// </summary>
+        /// <param name="addLabel">Label info</param>
+        /// <param name="userId">User Id</param>
+        /// <param name="noteId">Note Id</param>
+        /// <returns>Label Info</returns>
         public async Task<LabelEntity> AddLabel(AddLabelModel addLabel, long userId, long noteId)
         {
             try
@@ -36,7 +45,13 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Update label
+        /// <summary>
+        /// Update a Label
+        /// </summary>
+        /// <param name="userId">User Id</param>
+        /// <param name="labelId">Label Id</param>
+        /// <param name="labelName">Label Info</param>
+        /// <returns>Updated label info</returns>
         public async Task<LabelEntity> UpdateLabel(long userId, long labelId, string labelName)
         {
             try
@@ -55,7 +70,12 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Delete Label
+        /// <summary>
+        /// Delete Label
+        /// </summary>
+        /// <param name="userId">User id</param>
+        /// <param name="labelId">Label Id</param>
+        /// <returns>boolean Value</returns>
         public async Task<bool> DeleteLabel(long userId, long labelId)
         {
             try
@@ -74,7 +94,11 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Get All Label For User
+        /// <summary>
+        /// Gell All Label info
+        /// </summary>
+        /// <param name="userId">User Id</param>
+        /// <returns>Get all info of Label</returns>
         public async Task<IEnumerable<LabelEntity>> GetLabels(long userId)
         {
             try
@@ -86,7 +110,12 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Get All Label For A node
+        /// <summary>
+        /// Get all label for a note
+        /// </summary>
+        /// <param name="userId">User Id</param>
+        /// <param name="noteId">Note Id</param>
+        /// <returns>labels info for a note</returns>
         public async Task<IEnumerable<LabelEntity>> GetLabelsByNote(long userId, long noteId)
         {
             try

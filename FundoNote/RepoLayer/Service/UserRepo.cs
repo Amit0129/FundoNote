@@ -17,6 +17,9 @@ using System.Threading.Tasks;
 
 namespace RepoLayer.Service
 {
+    /// <summary>
+    /// User Repo layer
+    /// </summary>
     public class UserRepo : IUserRepo
     {
         private readonly FundoContext fundoContext;
@@ -26,6 +29,11 @@ namespace RepoLayer.Service
             this.fundoContext = fundoContext;
             this.Iconfiguration = Iconfiguration;
         }
+        /// <summary>
+        /// User rrgister
+        /// </summary>
+        /// <param name="model">register model</param>
+        /// <returns>User info</returns>
         public async Task<UserEntity> UserRegister(UserRegistrationModel model)
         {
             try
@@ -54,7 +62,11 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //User Log in=========================
+        /// <summary>
+        /// User logIn
+        /// </summary>
+        /// <param name="loginModel">Login Info</param>
+        /// <returns>User info with jwt token</returns>
         public async Task<UserLogInResult> UserLogin(UserLoginModel loginModel)
         {
             try
@@ -80,7 +92,12 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Generate JWT Token=============================================
+        /// <summary>
+        /// Jwt token creater
+        /// </summary>
+        /// <param name="userid">User Id</param>
+        /// <param name="email">Email Id of User</param>
+        /// <returns></returns>
         public async Task<string> JWTTokenGenerator(long userid, string email)
         {
             var tokenHanler = new JwtSecurityTokenHandler();
@@ -98,7 +115,11 @@ namespace RepoLayer.Service
             var token = tokenHanler.CreateToken(tokenDescriptor);
             return tokenHanler.WriteToken(token);
         }
-        //Forget Password==========================
+        /// <summary>
+        /// Forget Password
+        /// </summary>
+        /// <param name="forgetPassword">Email Id</param>
+        /// <returns>Send jwt token</returns>
         public async Task<string> ForgetPassword(ForgetPasswordModel forgetPassword)
         {
             try
@@ -123,7 +144,12 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //ResetPassword ===================
+        /// <summary>
+        /// Reset Password
+        /// </summary>
+        /// <param name="resetPassword">password info</param>
+        /// <param name="email">User Email Id</param>
+        /// <returns>boolean value</returns>
         public async Task<bool> ResetPassword(ResetPasswordModel resetPassword, string email)
         {
             try

@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace RepoLayer.Service
 {
+    /// <summary>
+    /// Collaborator Repo Layer
+    /// </summary>
     public class CollaboratorRepo : ICollaboratorRepo
     {
         private readonly FundoContext context;
@@ -19,7 +22,13 @@ namespace RepoLayer.Service
         {
             this.context = context;
         }
-        //Add Collab 
+        /// <summary>
+        /// Add Collab to note
+        /// </summary>
+        /// <param name="collabModel">Collab details</param>
+        /// <param name="userId">User Id</param>
+        /// <param name="noteId">Note Id </param>
+        /// <returns>Collab Info</returns>
         public async Task<CollaboratorEntity> AddCollab(AddCollabModel collabModel, long userId, long noteId)
         {
             try
@@ -37,7 +46,13 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Delete Collab
+        /// <summary>
+        /// Remove a Collab
+        /// </summary>
+        /// <param name="colabId">Collab Id</param>
+        /// <param name="userID">User Id</param>
+        /// <param name="noteId">Note Id</param>
+        /// <returns>Boolean Value</returns
         public async Task<bool> DeleteAColab(int colabId, long userID, long noteId)
         {
             try
@@ -56,7 +71,13 @@ namespace RepoLayer.Service
                 throw new Exception(ex.Message);
             }
         }
-        //Get All Colab Email 
+        /// <summary>
+        /// Gel All colab info of a note
+        /// </summary>
+        /// <param name="userID">User Id</param>
+        /// <param name="noteId">Note Id</param>
+        /// <returns>All collab info</returns>
+        /// <exception cref="Exception"></exception>
         public async Task<IEnumerable<CollaboratorEntity>> GetAllCollab(long userID, long noteId)
         {
             try

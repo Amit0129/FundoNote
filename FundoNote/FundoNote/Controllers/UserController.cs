@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace FundoNote.Controllers
 {
+    /// <summary>
+    /// User controller
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -21,6 +24,11 @@ namespace FundoNote.Controllers
         {
             this.userBusiness = userBusiness;
         }
+        /// <summary>
+        /// User registration
+        /// </summary>
+        /// <param name="model">New User Info</param>
+        /// <returns>Register user info im SMD Format</returns>
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> UserRegister(UserRegistrationModel model)
@@ -43,6 +51,11 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// User Login
+        /// </summary>
+        /// <param name="loginModel">LogIn Info</param>
+        /// <returns>SMD Formart</returns>
         [HttpPost("Login")]
         public async Task<IActionResult> UserLogin(UserLoginModel loginModel)
         {
@@ -63,6 +76,12 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Forget Password
+        /// </summary>
+        /// <param name="forgetPassword">forget password model</param>
+        /// <returns>token</returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         [Route("ForgetPassword")]
         public async Task<IActionResult> ForgetPassword(ForgetPasswordModel forgetPassword)
@@ -84,6 +103,12 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Reset Password
+        /// </summary>
+        /// <param name="resetPassword">NewPassword,Confirm Password</param>
+        /// <returns>boolean value</returns>
+        /// <exception cref="Exception"></exception>
         [Authorize]
         [HttpPut("ResetPassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPassword)

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace FundoNote.Controllers
 {
+    /// <summary>
+    /// Label controller
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -20,6 +23,13 @@ namespace FundoNote.Controllers
         {
             this.labelBusiness = labelBusiness;
         }
+        /// <summary>
+        /// Add a new label to a note
+        /// </summary>
+        /// <param name="addLabel">New label info</param>
+        /// <param name="noteId">Note Id</param>
+        /// <returns>Register label info</returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         [Route("AddLabel/{noteId}")]
         public async Task<IActionResult> AddLabel(AddLabelModel addLabel, long noteId)
@@ -42,6 +52,13 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Update Label
+        /// </summary>
+        /// <param name="labelId">Label Id</param>
+        /// <param name="labelName">New Label Name</param>
+        /// <returns>updated label info</returns>
+        /// <exception cref="Exception"></exception>
         [HttpPatch]
         [Route("Update/{labelId}/{labelName}")]
         public async Task<IActionResult> UpdateLabel(long labelId, string labelName)
@@ -61,6 +78,12 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Delete Label
+        /// </summary>
+        /// <param name="labelId">Label Id</param>
+        /// <returns>boolean value</returns>
+        /// <exception cref="Exception"></exception>
         [HttpDelete]
         [Route("DeleteLabel/{labelId}")]
         public async Task<IActionResult> DeleteLabel(long labelId)
@@ -83,6 +106,10 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Gel all labels
+        /// </summary>
+        /// <returns>Get all Label Info</returns>
         [HttpGet]
         public async Task<IActionResult> GetLabels()
         {
@@ -104,6 +131,11 @@ namespace FundoNote.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        /// <summary>
+        /// Get label info of a Note
+        /// </summary>
+        /// <param name="noteId">Note Id</param>
+        /// <returns>Labels info of a note</returns>
         [HttpGet]
         [Route("GetLabelById/{noteId}")]
         public async Task<IActionResult> GetLabelsByNote(long noteId)
